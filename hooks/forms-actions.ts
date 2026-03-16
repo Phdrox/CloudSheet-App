@@ -66,9 +66,8 @@ export function useFormLogin() {
       email: item.email,
       password: item.password,
       rememberMe: true,
-      callbackURL:'/main/dashboard'
     });
-     
+     console.log(data, error)
   }
 
 

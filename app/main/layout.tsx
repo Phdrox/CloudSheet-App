@@ -11,7 +11,6 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
 const router = useRouter()
-  const { data: session, isPending } = authClient.useSession()
 
   const menuItems = [
     { name: "Dashboard", icon: "dashboard", url: "/main/dashboard", allowed: ["admin", "all"] },
@@ -20,24 +19,8 @@ const router = useRouter()
     { name: "Users", icon: "user", url: "/main/users", allowed: ["admin"] }
   ]
 
-  useEffect(() => {
-    if (!isPending && !session) {
-      router.push("/auth/login")
-    }
-  }, [session, isPending, router])
 
-  // Evita renderizar o conteúdo enquanto verifica a sessão
-  if (isPending) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-accent-foreground text-white">
-        <p className="animate-pulse font-raleway">Carregando...</p>
-      </div>
-    )
-  }
 
-  if (!session) return null
-
-  console.log(session)
   return (
     <div className="flex bg-accent-foreground">
         <SidebarProvider className="px-3">
