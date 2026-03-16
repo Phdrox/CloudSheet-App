@@ -1,16 +1,16 @@
+
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Raleway } from "next/font/google";
+import ReactQueryProvider from "@/hooks/useProviderQuery";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const raleway = Raleway({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-raleway",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,13 +22,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+   <html lang="pt-BR" >
+    <ReactQueryProvider>
+      <body className={`${raleway.className} bg-gray-900 min-h-screen`}>
+          {children}
       </body>
+    </ReactQueryProvider>
     </html>
   );
 }
