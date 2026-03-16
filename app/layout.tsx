@@ -1,11 +1,7 @@
-'use client'
 import type { Metadata } from "next";
 import "./globals.css";
 import { Raleway } from "next/font/google";
 import ReactQueryProvider from "@/hooks/useProviderQuery";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -25,14 +21,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   
-  const {data: session, isPending } = authClient.useSession()
-  const router = useRouter()
-
-  if(!session){
-    router.push('/auth/login')
-  }
-
-  console.log(session)
 
   return (
    <html lang="pt-BR" >

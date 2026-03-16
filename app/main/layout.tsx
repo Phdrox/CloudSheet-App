@@ -3,14 +3,21 @@ import AppSidebar from "@/components/sidebar"
 import { SidebarProvider,SidebarTrigger } from "@/components/ui/sidebar"
 import { authClient } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-const router = useRouter()
+  const {data: session, isPending } = authClient.useSession()
+  const router = useRouter()
+
+  if(!session){
+    router.push('/auth/login')
+  }
+
+  console.log(session)
+
 
   const menuItems = [
     { name: "Dashboard", icon: "dashboard", url: "/main/dashboard", allowed: ["admin", "all"] },
