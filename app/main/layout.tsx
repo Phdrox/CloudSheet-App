@@ -12,8 +12,8 @@ export default function MainLayout({
   const {data: session, isPending } = authClient.useSession()
   const router = useRouter()
 
-  if(!session){
-    router.push('/auth/login')
+  if(session){
+    router.push('/main/dashboard')
   }
 
   console.log(session)
