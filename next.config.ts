@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["package-name"],
+  reactStrictMode: true,
 };
 
 export default nextConfig;
