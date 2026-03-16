@@ -26,9 +26,9 @@ export default function RootLayout({
 }>) {
   
   const {data: session, isPending } = authClient.useSession()
+  const router = useRouter()
 
   if(!session){
-    const router = useRouter()
     router.push('/auth/login')
   }
 
