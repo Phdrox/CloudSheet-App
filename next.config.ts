@@ -1,13 +1,10 @@
+import withTM from "next-transpile-modules";
+
+const transpileModules = withTM(["name-of-the-package-causing-error"]);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/api/auth/:path*',
-        destination: 'https://cloud-sheet.vercel.app/api/auth/:path*',
-      },
-    ];
-  },
+  
 };
 
-export default nextConfig;
+export default transpileModules(nextConfig);
