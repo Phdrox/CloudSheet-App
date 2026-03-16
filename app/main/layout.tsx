@@ -19,7 +19,7 @@ const router = useRouter()
     { name: "Users", icon: "user", url: "/main/users", allowed: ["admin"] }
   ]
 
-
+ 
 
   return (
     <div className="flex bg-accent-foreground">

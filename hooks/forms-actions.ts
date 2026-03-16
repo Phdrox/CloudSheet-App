@@ -62,12 +62,13 @@ export function useFormLogin() {
  
 
   async function onSubmit(item: LoginSchema) {
-    const { data, error } = await authClient.signIn.email({
+     await authClient.signIn.email({
       email: item.email,
       password: item.password,
       rememberMe: true,
+      callbackURL: 'https://cloud-sheet-app.vercel.app/main/dashboard',
+      
     });
-     console.log(data, error)
   }
 
 
