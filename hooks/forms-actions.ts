@@ -59,9 +59,9 @@ export function useFormLogin() {
     }
   })
   
-  const mutation=  useMutateAction({
-        key:['user'],
-        mutationFn: (data: LoginSchema) => postApi({url:'users/create/login',data}),
+  const mutation=useMutateAction({
+        key:['login'],
+        mutationFn: (data: LoginSchema) => postApi({url:'api/auth/sign-in/email',data}),
         onSuccess:()=>{router.push('/main/dashboard')},
   })
 
