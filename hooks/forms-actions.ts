@@ -45,7 +45,7 @@ export function useFormRegister() {
 
 
 export function useFormLogin() {
- 
+  const router=useRouter()
   const schemaFormLogin = z.object({
     email: z.email(),
     password: z.string(),
@@ -66,9 +66,9 @@ export function useFormLogin() {
      const {data,error} = await authClient.signIn.email({
       email: item.email,
       password: item.password,
-      rememberMe: true,      
+      rememberMe: true, 
     });
-
+    router.push('/main/dashboard')
     console.log(data,error)
   }
 
