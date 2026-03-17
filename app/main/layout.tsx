@@ -9,12 +9,12 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const {data: session, isPending } = authClient.useSession()
+  const {data, isPending,} = authClient.useSession()
   const router = useRouter()
   
-  console.log(session)
-  if(session){
-    router.push('/main/dashboard')
+  console.log(data,isPending)
+  if(isPending){
+    return <div>Loading...</div>
   }
   
   
@@ -32,7 +32,7 @@ export default function MainLayout({
   return (
     <div className="flex bg-accent-foreground">
         <SidebarProvider className="px-3">
-            <AppSidebar array={menuItems} user="Bento" />
+            <AppSidebar array={menuItems} user={data?.user.name!} />
             <SidebarTrigger className="bg-sky-700 text-white cursor-pointer"/>
             <div className="">
               {children}
