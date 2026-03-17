@@ -62,11 +62,13 @@ export function useFormLogin() {
  
 
   async function onSubmit(item: LoginSchema) {
-     await authClient.signIn.email({
+    console.log('click')
+     const {data,error} = await authClient.signIn.email({
       email: item.email,
       password: item.password,
       rememberMe: true,      
     });
+
   }
 
 
