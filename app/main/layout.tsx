@@ -9,17 +9,19 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const {data, isPending,} = authClient.useSession()
+  const {data, isPending,error,isRefetching} = authClient.useSession()
   const router = useRouter()
   
-  console.log(data,isPending)
+  console.log(data,isPending,error,isRefetching)
   if(isPending){
     return <div>Loading...</div>
   }
+
+  if(error){
+    return <div>Error: {error.message}</div>
+  }
   
   
-
-
   const menuItems = [
     { name: "Dashboard", icon: "dashboard", url: "/main/dashboard", allowed: ["admin", "all"] },
     { name: "Histórico", icon: "history", url: "/main/history", allowed: ["admin", "all"] },
