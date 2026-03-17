@@ -43,7 +43,6 @@ export function useFormRegister() {
   return {onSubmit,reset,handleSubmit,control,isLoading:mutation.isPending}
 }
 
-
 export function useFormLogin() {
   const router=useRouter()
   const schemaFormLogin = z.object({
@@ -59,18 +58,15 @@ export function useFormLogin() {
         password:'',
     }
   })
- 
+  
+  const mutation=  useMutateAction({
+        key:['user'],
+        mutationFn: (data: LoginSchema) => postApi({url:'create/login',data}),
+        onSuccess:()=>{router.push('/main/dashboard')},
+  })
 
   async function onSubmit(item: LoginSchema) {
-    
-     const response= await authClient.signIn.email({
-      email: item.email,
-      password: item.password,
-      rememberMe: true, 
-    });
-    //router.push('/main/dashboard')
-    console.log(response)
-    
+    mutation.mutate(item)
   }
 
 
