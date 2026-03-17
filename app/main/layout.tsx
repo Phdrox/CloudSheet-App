@@ -11,12 +11,13 @@ export default function MainLayout({
 }) {
   const {data: session, isPending } = authClient.useSession()
   const router = useRouter()
-
+  
+  console.log(session)
   if(session){
     router.push('/main/dashboard')
   }
-
-  console.log(session)
+  
+  
 
 
   const menuItems = [

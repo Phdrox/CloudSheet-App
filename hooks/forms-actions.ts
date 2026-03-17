@@ -69,7 +69,6 @@ export function useFormLogin() {
       rememberMe: true, 
     });
     router.push('/main/dashboard')
-    console.log(data,error)
   }
 
 
