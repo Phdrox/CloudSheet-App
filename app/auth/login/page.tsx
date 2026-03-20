@@ -6,7 +6,12 @@ import Image from 'next/image'
 export default async function Login() {
 
   
- console.log('olá')
+ try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category`)
+    const data = await res.json()
+  } catch (e) {
+    console.log("Erro ao buscar API:", e)
+  }
 
   return (
     <div className='min-h-screen bg-foreground  gap-3 flex items-center justify-center flex-col'>
