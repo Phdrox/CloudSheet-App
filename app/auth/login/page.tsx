@@ -9,6 +9,7 @@ export default async function Login() {
  try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category`)
     const data = await res.json()
+    console.log(data)
   } catch (e) {
     console.log("Erro ao buscar API:", e)
   }
