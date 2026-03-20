@@ -5,7 +5,7 @@ import {FaTachometerAlt,FaList,FaMapPin,FaUser}from "react-icons/fa"
 import { IconType } from "react-icons"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { authClient } from "@/lib/auth-client"
+
 
 type IDash={
   name:string,
