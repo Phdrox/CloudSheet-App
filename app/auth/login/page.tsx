@@ -4,10 +4,8 @@ import { getApi } from '@/hooks/requests/api-request'
 import Image from 'next/image'
 
 export default async function Login() {
-
-  
  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category`)
+    const res = await fetch(`/api/category`)
     const data = await res.json()
     console.log(data)
   } catch (e) {
