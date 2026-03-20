@@ -6,7 +6,7 @@ export default async function Login() {
   const {data}= await getApi({url:'/api/category'})
 
   console.log(data)
-
+ console.log('olá')
 
   return (
     <div className='min-h-screen bg-foreground  gap-3 flex items-center justify-center flex-col'>
