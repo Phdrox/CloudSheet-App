@@ -18,7 +18,7 @@ type IdAxios={
 
 export const getApi= async ({id,url}:getAxios) => {
   if (!url) return
-       const data=await axios.get(url.startsWith("/") ? url : `/${url}}`,
+       const data=await axios.get(url.startsWith("/") ? url : `/${url}`,
         {withCredentials:true,
         headers:{'Content-Type':'application/json'}}).then(res=>res.data)
        return data
