@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 export default async function Login() {
  try {
-     const {data}= await getApi({url:'api/category'})
-    console.log(data)
+    
+    
   } catch (e) {
     console.log("Erro ao buscar API:", e)
   }
