@@ -1,9 +1,11 @@
+'use client'
 import FormLogin from '@/components/FormLogin'
 import { getApi } from '@/hooks/requests/api-request'
 import Image from 'next/image'
 
 export default async function Login() {
-  const {data}= await getApi({url:'/api/category'})
+
+  const {data}=  (await getApi({url:'/api/category'}))
 
   console.log(data)
  console.log('olá')
