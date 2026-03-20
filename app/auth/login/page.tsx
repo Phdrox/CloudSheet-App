@@ -5,9 +5,7 @@ import Image from 'next/image'
 
 export default async function Login() {
 
-  const {data}=  (await getApi({url:'/api/category'}))
-
-  console.log(data)
+  
  console.log('olá')
 
   return (
