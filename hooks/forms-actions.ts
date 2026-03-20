@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutateAction } from "./methodsApi"
 import { postApi } from "./requests/api-request"
 import { useRouter } from "next/navigation"
-import { authClient } from "@/lib/auth-client"
 
 export function useFormRegister() {
   const router=useRouter()
