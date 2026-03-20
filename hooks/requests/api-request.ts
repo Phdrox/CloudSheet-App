@@ -18,7 +18,7 @@ type IdAxios={
 
 export const getApi= async ({id,url}:getAxios)=>{
   if (!url) return
-       const data=await axios.get(`https://cloud-sheet.vercel.app/${url}`,
+       const data=await axios.get(`https://cloud-sheet-app.vercel.app/${url}`,
         {withCredentials:true,
         headers:{'Content-Type':'application/json'}}).then(res=>res.data)
        return data
@@ -26,19 +26,19 @@ export const getApi= async ({id,url}:getAxios)=>{
 }
 
 export const postApi=({url,data}:postAxios)=>{
-   return axios.post(`https://cloud-sheet.vercel.app/${url}`,
+   return axios.post(`https://cloud-sheet-app.vercel.app/${url}`,
     data,{withCredentials:true,
         headers:{'Content-Type':'application/json'}})
 }
 
 export const putApi=({url,data,id}:IdAxios)=>{
-   return axios.put(`https://cloud-sheet.vercel.app/${url}`,
+   return axios.put(`https://cloud-sheet-app.vercel.app/${url}`,
     data,{withCredentials:true,
         headers:{'Content-Type':'application/json'}})
 }
 
 export const deleteApi=({url}:IdAxios)=>{
-   return axios.delete(`https://cloud-sheet.vercel.app/${url}`,
+   return axios.delete(`https://cloud-sheet.vercel-app.app/${url}`,
     {withCredentials:true,
     headers:{'Content-Type':'application/json'}})
 }
