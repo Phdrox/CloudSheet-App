@@ -4,7 +4,12 @@ import { getApi } from '@/hooks/requests/api-request'
 import Image from 'next/image'
 
 export default async function Login() {
-
+ try {
+     const {data}= await getApi({url:'api/category'})
+    console.log(data)
+  } catch (e) {
+    console.log("Erro ao buscar API:", e)
+  }
 
   return (
     <div className='min-h-screen bg-foreground  gap-3 flex items-center justify-center flex-col'>
