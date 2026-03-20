@@ -27,7 +27,7 @@ export function useFormRegister() {
   
     const mutation=  useMutateAction({
         key:['user'],
-        mutationFn: (data: RegisterSchema) => postApi({url:'api/auth/sign-up/email',data}),
+        mutationFn: (data: RegisterSchema) => postApi({url:'api/auth/register',data}),
         onSuccess:()=>{router.push('/auth/login')},
         })
 
@@ -60,7 +60,7 @@ export function useFormLogin() {
   
   const mutation=useMutateAction({
         key:['login'],
-        mutationFn: (data: LoginSchema) => postApi({url:'api/auth/sign-in/email',data}),
+        mutationFn: (data: LoginSchema) => postApi({url:'api/auth/login',data}),
         onSuccess:()=>{router.push('/main/dashboard')},
   })
 
