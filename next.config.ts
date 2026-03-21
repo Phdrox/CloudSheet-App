@@ -8,7 +8,7 @@ async rewrites() {
         destination: "https://cloud-sheet.vercel.app/:path*",
       },
       {
-        source: "/api/:path*",
+        source: "/api/auth/:path*",
         destination: "https://cloud-sheet.vercel.app/auth/:path*",
       },
     ]

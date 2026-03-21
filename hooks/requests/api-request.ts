@@ -26,19 +26,19 @@ export const getApi= async ({id,url}:getAxios) => {
 }
 
 export const postApi=({url,data}:postAxios)=>{
-   return axios.post(`${url}`,
+   return axios.post(url.startsWith("/") ? url : `/${url}`,
     data,{withCredentials:true,
         headers:{'Content-Type':'application/json'}})
 }
 
 export const putApi=({url,data,id}:IdAxios)=>{
-   return axios.put(`${url}`,
+   return axios.put(url.startsWith("/") ? url : `/${url}`,
     data,{withCredentials:true,
         headers:{'Content-Type':'application/json'}})
 }
 
 export const deleteApi=({url}:IdAxios)=>{
-   return axios.delete(`${url}`,
+   return axios.delete(url.startsWith("/") ? url : `/${url}`,
     {withCredentials:true,
     headers:{'Content-Type':'application/json'}})
 }

@@ -27,7 +27,7 @@ export function useFormRegister() {
   
     const mutation=  useMutateAction({
         key:['user'],
-        mutationFn: (data: RegisterSchema) => postApi({url:'api/auth/register',data}),
+        mutationFn: (data: RegisterSchema) => postApi({url:'/api/auth/register',data}),
         onSuccess:()=>{router.push('/auth/login')},
         })
 
