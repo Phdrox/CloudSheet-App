@@ -5,11 +5,11 @@ async rewrites() {
   return [
     {
       source: "/api/auth/:path*",
-      destination: "https://cloud-sheet.vercel.app/api/auth/:path*",
+      destination: "https://cloud-sheet.vercel.app/auth/:path*",
     },
     {
       source: "/api/:path*",
-      destination: "https://cloud-sheet.vercel.app/api/:path*",
+      destination: "https://cloud-sheet.vercel.app/:path*",
     },
   ];
 }
