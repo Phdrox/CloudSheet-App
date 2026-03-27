@@ -32,6 +32,7 @@ export  function AppSidebar({user,array}:IPropDash) {
      <Sidebar className="bg-sidebar text-sidebar-primary-foreground border-r border-sidebar-border dark" >
       <SidebarHeader/>
         <span className="flex items-center justify-center text-primary">
+          {user}
         </span>
       <SidebarHeader />
       <SidebarGroupLabel>Menu</SidebarGroupLabel>

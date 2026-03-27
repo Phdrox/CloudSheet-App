@@ -1,7 +1,11 @@
 "use client"
 import AppSidebar from "@/components/sidebar"
 import { SidebarProvider,SidebarTrigger } from "@/components/ui/sidebar"
+import { useGetQueries } from "@/hooks/methodsApi"
+import { getApi } from "@/hooks/requests/api-request"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { Toaster } from "@/components/ui/sonner"
 
 export default function MainLayout({
   children,
@@ -16,17 +20,37 @@ export default function MainLayout({
     { name: "Metas", icon: "goals", url: "/main/goals", allowed: ["admin", "all"] },
     { name: "Users", icon: "user", url: "/main/users", allowed: ["admin"] }
   ]
-
- 
-
+  
+  const {data,isLoading,isError}= useGetQueries({
+    key:['profile'],
+    queryFn:() => getApi({url:'api/auth/profile'}),
+  });
+  
+  useEffect(() => {
+    if (!isLoading && (!data|| isError)) {
+      router.push('/auth/login');
+    }
+  }, [ isLoading,data, isError, router]);
+  
+ if (isLoading) {
   return (
+    <div className="flex h-screen items-center justify-center bg-accent-foreground text-white">
+      Carregando...
+    </div>
+  );
+}
+
+if (!data) return null;
+  
+return (
     <div className="flex bg-accent-foreground">
         <SidebarProvider className="px-3">
-            
+            <AppSidebar user={data.name} array={menuItems}/>
             <SidebarTrigger className="bg-sky-700 text-white cursor-pointer"/>
-            <div className="">
+            <div className="w-full">
               {children}
             </div>
+            <Toaster/>
         </SidebarProvider>
     </div>
   )
