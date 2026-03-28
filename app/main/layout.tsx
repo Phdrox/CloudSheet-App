@@ -5,7 +5,6 @@ import { useGetQueries } from "@/hooks/methodsApi"
 import { getApi } from "@/hooks/requests/api-request"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { Toaster } from "@/components/ui/sonner"
 
 export default function MainLayout({
   children,
@@ -23,7 +22,7 @@ export default function MainLayout({
   
   const {data,isLoading,isError}= useGetQueries({
     key:['profile'],
-    queryFn:() => getApi({url:'api/auth/profile'}),
+    queryFn:() => getApi({url:'/auth/profile'}),
   });
   
   useEffect(() => {
@@ -50,7 +49,6 @@ return (
             <div className="w-full">
               {children}
             </div>
-            <Toaster/>
         </SidebarProvider>
     </div>
   )

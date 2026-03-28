@@ -23,7 +23,7 @@ import { Calendar } from './ui/calendar'
 export default function FormFlows() {
 
  const {handleSubmit,control,reset,onSubmit}=useFormFlows()
- const {data,isLoading}=useGetQueries({key:['category'],queryFn:()=>getApi({url:'api/category'})})
+ const {data,isLoading}=useGetQueries({key:['category'],queryFn:()=>getApi({url:'/category'})})
  const items=data?.data || [];
   return (
     <form id="form-flows"  onSubmit={handleSubmit(onSubmit,(errors) => console.log("Erros do Zod:", errors))}>

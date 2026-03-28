@@ -31,7 +31,7 @@ export function useFormRegister() {
   
     const mutation=  useMutateAction({
         key:['user'],
-        mutationFn: (data: RegisterSchema) => postApi({url:'api/auth/register',data}),
+        mutationFn: (data: RegisterSchema) => postApi({url:'/auth/register',data}),
         onSuccess:()=>{router.push('/auth/login')},
         })
 
@@ -64,7 +64,7 @@ export function useFormLogin() {
   
   const mutation=useMutateAction({
         key:['login'],
-        mutationFn: (data: LoginSchema) => postApi({url:'api/auth/login',data}),
+        mutationFn: (data: LoginSchema) => postApi({url:'/auth/login',data}),
         onSuccess:()=>{router.push('/main/dashboard')},
   })
 
@@ -82,7 +82,7 @@ export function useFormFlows(){
   const schemaFormFlows=z.object({
     id_categories: z.string().min(1, "Selecione uma categoria"),
     id_account: z.string(),
-    name: z.string().min(5, "Deve ter no mínimo 5 caracteres"),
+    name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
     type: z.string().min(1, "Selecione o tipo"),
     payment: z.string().min(1, "Selecione o pagamento"),
     price: z.string()
@@ -113,8 +113,8 @@ export function useFormFlows(){
 
   const mutation=useMutateAction({
     key:['flows'],
-    mutationFn:(data:FlowsSchema) => postApi({url:'api/flows',data:data})
-    ,onSuccess:()=>{toast('Fluxo criado com sucesso')},
+    mutationFn:(data:FlowsSchema) => postApi({url:'/flows',data:data})
+    ,onSuccess:()=>{toast.success('Fluxo criado com sucesso',{position:'top-center'})},
     invalidateKeys:['flows']
     })
 
