@@ -32,7 +32,10 @@ export function useFormRegister() {
     const mutation=  useMutateAction({
         key:['user'],
         mutationFn: (data: RegisterSchema) => postApi({url:'/auth/register',data}),
-        onSuccess:()=>{router.push('/auth/login')},
+        onSuccess:()=>{
+          toast.success('Fluxo criado com sucesso',{position:'top-center'})
+          router.push('/auth/login')
+        },
         })
 
   function onSubmit(data:RegisterSchema){
