@@ -1,5 +1,5 @@
-import React from 'react'
-import { FieldGroup, FieldLabel,Field } from './ui/field'
+'use client'
+import { FieldGroup, FieldLabel,Field, FieldDescription } from './ui/field'
 import { useFormFlows } from '@/hooks/forms-actions'
 import { Controller } from 'react-hook-form'
 import { useGetQueries } from '@/hooks/methodsApi'
@@ -9,10 +9,14 @@ import { Input} from './ui/input'
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from './ui/input-group'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
 import { ptBR } from "date-fns/locale"
 import {format} from "date-fns"
 import { Calendar } from './ui/calendar'
+import { Combobox,ComboboxInput,ComboboxContent,ComboboxEmpty,ComboboxList,ComboboxItem } from './ui/combobox'
+import { Command, CommandInput, CommandItem, CommandList } from './ui/command'
+import { cn } from '@/lib/utils'
+
 
  type IFlows={
     type_categorie:string;
@@ -25,8 +29,11 @@ export default function FormFlows() {
  const {handleSubmit,control,reset,onSubmit}=useFormFlows()
  const {data,isLoading}=useGetQueries({key:['category'],queryFn:()=>getApi({url:'/category'})})
  const items=data?.data || [];
+ const banks=useGetQueries({key:['banks'],queryFn:()=>getApi({url:`/banks`})})
+ const itemsBank=banks?.data?.data || [];
+
   return (
-    <form id="form-flows"  onSubmit={handleSubmit(onSubmit,(errors) => console.log("Erros do Zod:", errors))}>
+    <form id="form-flows" className='flex flex-col justify-around gap-10'  onSubmit={handleSubmit(onSubmit,(errors) => console.log("Erros do Zod:", errors))}>
         <FieldGroup className="text-white">
             <Controller name='name' control={control} render={({field,fieldState})=>(
                 <Field>
@@ -67,6 +74,54 @@ export default function FormFlows() {
                   </Select>
                </Field>
             )} /> 
+            
+            <Controller name='id_name_banks'control={control} render={({field,fieldState})=>(
+               <Field>
+                  <FieldLabel>
+                      Instituição Financeira
+                  </FieldLabel>
+                  <FieldDescription>Use a seta do teclado pra cima ou pra baixo para navegar na lista</FieldDescription>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn("w-[200px] justify-between  truncate", !field.value && "text-muted-foreground ")}
+                      >
+                        {field.value
+                          ? itemsBank.find((f:any) => f.id === field.value)?.name
+                          : "Selecione uma Instituição"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-86 p-0 ">
+                      <Command>
+                        <CommandInput placeholder="Selecione uma Instituição" />
+                        <CommandList>
+                          {itemsBank.map((framework:any) => (
+                            <CommandItem
+                              value={framework.name}
+                              key={framework.id}
+                              onSelect={() => {
+                                field.onChange(framework.id) // <--- ATUALIZA O REACT HOOK FORM
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  framework.id === field.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {framework.name}
+                            </CommandItem>
+                          ))}
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+               </Field>
+            )} /> 
+          
 
             <Controller name='type'control={control} render={({field,fieldState})=>(
                <Field>
@@ -92,9 +147,9 @@ export default function FormFlows() {
                   </Select>
                </Field>
             )} /> 
-
+            <FieldGroup className='flex flex-row align-center justify-center'>
             <Controller name='payment'control={control} render={({field,fieldState})=>(
-               <Field>
+               <Field className='w-1/2'>
                   <FieldLabel>
                       Forma de Pagamento
                   </FieldLabel>
@@ -121,7 +176,7 @@ export default function FormFlows() {
             )} /> 
 
               <Controller name='price' control={control} render={({field,fieldState})=>(
-                <Field>
+                <Field className='w-1/2'>
                     <FieldLabel>Valor</FieldLabel>
                      <InputGroup>
                         <InputGroupAddon>
@@ -140,7 +195,7 @@ export default function FormFlows() {
                     </InputGroup>
                 </Field>                
             )}/>
-
+        </FieldGroup>
             <Controller name='date' control={control} render={({field,fieldState})=>(
                 <Field>
                     <FieldLabel>Data</FieldLabel>
@@ -157,8 +212,9 @@ export default function FormFlows() {
                     </Popover>            
                 </Field>
             )}/>
-            <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white duration-300'>Enviar</Button>
+            
         </FieldGroup>
+        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white duration-300 p-6'>Enviar</Button>
     </form>
   )
 }

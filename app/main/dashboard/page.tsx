@@ -31,14 +31,16 @@ export default  function Dashboard() {
     console.log('loading')
   }
 
-  const gastos=SomarPrice(data?.data,'gasto')
-  const ganhos=SomarPrice(data?.data,'ganho')
+  const dataFlow=data?.data.map((i:any)=>i.flow)
+
+  const gastos=SomarPrice(dataFlow,'gasto')
+  const ganhos=SomarPrice(dataFlow,'ganho')
   const saldo=ganhos-gastos
   
   const chartDataPrice=useMemo(()=>{
-    if(!data?.data) return [];
+    if(!dataFlow) return [];
     
-    const grouped=data.data.reduce((acc:any,item:any) => {
+    const grouped=dataFlow.reduce((acc:any,item:any) => {
      const date = item.date.split('T')[0].split('-'); 
      const year = parseInt(date[0]);
      const month = parseInt(date[1]);
@@ -61,9 +63,9 @@ export default  function Dashboard() {
  
   //constante de categoria
   const chartDataCategory=useMemo(()=>{
-    if(!data?.data) return [];
+    if(!dataFlow) return [];
     
-    const grouped=data.data.reduce((acc:any,item:any) => {
+    const grouped=dataFlow.reduce((acc:any,item:any) => {
       if (item.type !== 'gasto') return acc;
       const categories=item.id_categories
       
@@ -120,7 +122,11 @@ export default  function Dashboard() {
 
   return (
     <div className="bg-transparent p-10 ">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
+        <div className="w-full flex justify-center text-2xl text-white ">
+            Dashboard
+          </div>
+          
           <Toaster/>
           <div className="flex justify-end pb-6 ">
               <FormSheet title="Criar" description="Preencha os dados para criar um fluxo" buttonSheetName="Criar Fluxo" children={

@@ -21,7 +21,7 @@ export default function FormSheet({title,description,children,buttonSheetName}:I
           <SheetTitle>{title}</SheetTitle>
           <SheetDescription>{description}</SheetDescription>
         </SheetHeader>
-         <div className="flex-1 py-4 px-4">
+         <div className="flex-1  px-4">
           {children}
         </div>
       </SheetContent>

@@ -85,6 +85,7 @@ export function useFormFlows(){
   const schemaFormFlows=z.object({
     id_categories: z.string().min(1, "Selecione uma categoria"),
     id_account: z.string(),
+    id_name_banks:z.string().min(1,"Deve ter pelo menos um banco"),
     name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
     type: z.string().min(1, "Selecione o tipo"),
     payment: z.string().min(1, "Selecione o pagamento"),
@@ -100,6 +101,7 @@ export function useFormFlows(){
       defaultValues:{
         id_categories:'',
         id_account:item.id || '',
+        id_name_banks:'',
         name:'',
         type:'',
         payment:'',

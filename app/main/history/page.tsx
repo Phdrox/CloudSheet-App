@@ -1,8 +1,13 @@
 'use client'
 import DataTableFlow from '@/components/DataTableFlow'
+import { Input } from '@/components/ui/input';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request'
 import { ColumnDef } from '@tanstack/react-table';
+import { InfoIcon, Search } from 'lucide-react';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 type IFlows ={
   name:string;
@@ -16,20 +21,31 @@ type IFlows ={
 
 export default function History() {
 
+  const [flowName,setFlowName]=useState('')
+  const debouncedSearch = useDebouncedCallback((value: string) => {
+    setFlowName(value);
+  }, 200);
+
+
   const {data,isLoading} =useGetQueries({
-      key:['allflows'],
-      queryFn:()=> getApi({url:'/flows/allflows'})
+      key:['allflows',flowName],
+      queryFn:()=> getApi({url:`/flows/allflows?search=${flowName}`}),
+    
     })
   
     if(isLoading){
       console.log('loading')
     }
-   console.log(data)
+  
 
   const columns:ColumnDef<IFlows>[]=[
     {
       accessorKey:"name",
       header:"Nome",
+      cell:({row})=>{
+        const name:any=row.getValue('name')
+        return <div className='max-w-[150px] truncate whitespace-nowrap'>{name}</div>
+      }
     },
     {
       accessorKey:"type",
@@ -54,6 +70,19 @@ export default function History() {
       header:"Categoria",
     },
     {
+      accessorKey:"bank",
+      header:"Instituição Financeira",
+      cell:({row})=>{
+        const bank: string = row.getValue('bank')
+      return (
+        // Adicionei 'block' para o truncate funcionar corretamente
+        <div className='max-w-[150px] truncate font-medium' title={bank}>
+          {bank}
+        </div>
+      )
+      }
+    },
+    {
       accessorKey:"price",
       header:"Preço",
       cell:({row})=>{
@@ -64,7 +93,7 @@ export default function History() {
         style: "currency",
         currency: "BRL",
         }).format(amount)
-        return <div className={`${color}`}>{formatted}</div>
+        return <div className={`${color}`}>{type=='gasto'?`-${formatted}`:formatted}</div>
       }
     }, {
       accessorKey:"date",
@@ -83,10 +112,23 @@ export default function History() {
   if(isLoading){
     console.log('carregando')
   }
-  console.log(data)
+  const dataFlow=data?data?.data:[]
   
   return (
-    <div>
+    <div className='p-10'>
+      <div className='w-full text-2xl text-white flex justify-center'>Histórico</div>
+      <div >
+        <div className='w-full flex my-3 '> 
+          <InputGroup className='dark text-ring w-1/3'>
+            <InputGroupInput placeholder='Pesquise pelo nome do fluxo' onChange={(e)=>debouncedSearch (e.target.value)} />
+            <InputGroupAddon align='inline-end'>
+             <Search/>
+            </InputGroupAddon>
+          </InputGroup>
+
+        </div>
+        <DataTableFlow data={dataFlow} columns={columns} isLoading={isLoading}/>
+      </div>
      
     </div>
   )
