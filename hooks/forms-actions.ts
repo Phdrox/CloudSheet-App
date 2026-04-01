@@ -120,7 +120,6 @@ export function useFormFlows(){
     key:['flows'],
     mutationFn:(data:FlowsSchema) => postApi({url:'/flows',data:data})
     ,onSuccess:()=>{toast.success('Fluxo criado com sucesso',{position:'top-center'})},
-    invalidateKeys:['flows','allflows','historyId']
     })
 
   async function onSubmit(item:FlowsSchema){
