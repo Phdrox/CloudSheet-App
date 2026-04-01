@@ -32,7 +32,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
   const {id} =use(params)
   
   const {data,isLoading}=useGetQueries(
-    {key:['historyId',id],
+    {key:['historyId','deleteflows','flows',id],
     queryFn:()=>getApi({url:`/flows/${id}`})
   })
   const detailsId=data?.data?.[0]

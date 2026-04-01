@@ -13,7 +13,7 @@ import ChartTooltipPie from "@/components/ChartTooltipPie"
 export default  function Dashboard() {
 
   const {data,isLoading} =useGetQueries({
-    key:['flows'],
+    key:['flows','deleteflow','historyId'],
     queryFn:()=> getApi({url:'/flows/myflows'})
   })
   
