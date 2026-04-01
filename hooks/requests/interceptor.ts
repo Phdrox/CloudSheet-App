@@ -1,5 +1,7 @@
+import { rejects } from "assert";
 import axios from "axios";
-import { useRouter } from "next/router";
+import Router from "next/router";
+import { resolve } from "path";
 
 let isRefreshing = false;
 let failedQueue: any[] = [];
@@ -21,37 +23,45 @@ export const api = axios.create({
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config;
-        const router=useRouter()
+       const originalRequest=error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            if (isRefreshing) {
-                return new Promise((resolve, reject) => {
-                    failedQueue.push({ resolve, reject });
-                }).then(() => api(originalRequest));
-            }
+       if(
+          originalRequest.url?.includes('/auth/login')||
+          originalRequest.url?.includes('/auth/refresh')||
+          originalRequest.url?.includes('/auth/logout')
+       ){
+         return Promise.reject(error)
+       }
 
-            originalRequest._retry = true;
-            isRefreshing = true;
-
-            return new Promise((resolve, reject) => {
-                api.post("/auth/refresh") 
-                    .then(() => {
-                        processQueue(null);
-                        resolve(api(originalRequest));
-                    })
-                    .catch((err) => {
-                        processQueue(err);
-                        if (typeof window !== "undefined") {
-                            router.push("/auth/login");
-                        }
-                        reject(err);
-                    })
-                    .finally(() => {
-                        isRefreshing = false;
-                    });
-            });
+       if(error.response?.status === 401 && !originalRequest._retry){
+        if(isRefreshing){
+            return new Promise((resolve,reject) => {
+               failedQueue.push({resolve,reject});
+            }).then( ()=> api(originalRequest));
         }
-        return Promise.reject(error);
+
+        originalRequest._retry= true;
+        isRefreshing=true;
+        
+        return new Promise((resolve,rejects) => {
+            axios.post('/api/auth/refresh',{},{withCredentials:true})
+            .then(() => {
+                processQueue(null)
+                resolve(api(originalRequest));
+            })
+            .catch((err) => {
+                processQueue(err);
+                
+                if(typeof window !== "undefined"){
+                    Router.push("/auth/login");
+                }
+                rejects(err);
+            })
+            .finally(()=>{
+                isRefreshing=false;
+            });
+        });
+       }
+       return Promise.reject(error)
     }
 );
