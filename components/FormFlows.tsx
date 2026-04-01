@@ -39,12 +39,14 @@ export default function FormFlows() {
                 <Field>
                     <FieldLabel>Nome do Fluxo</FieldLabel>
                     <Input    
-                          
                         {...field}
                         type='text' 
                         aria-invalid={fieldState.invalid} 
                         placeholder='Insira o nome do fluxo' 
-                        autoComplete='true'  />
+                        autoComplete='true' 
+                        value={field.value ??''}
+                        
+                        />
                 </Field>                
             )}/>
             
@@ -212,7 +214,6 @@ export default function FormFlows() {
                     </Popover>            
                 </Field>
             )}/>
-            
         </FieldGroup>
         <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white duration-300 p-6'>Enviar</Button>
     </form>

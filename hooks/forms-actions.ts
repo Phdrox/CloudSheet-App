@@ -3,7 +3,7 @@ import {  z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutateAction } from "./methodsApi"
-import {  postApi } from "./requests/api-request"
+import {  deleteApi, postApi, putApi } from "./requests/api-request"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { toast } from "sonner"
@@ -120,7 +120,7 @@ export function useFormFlows(){
     key:['flows'],
     mutationFn:(data:FlowsSchema) => postApi({url:'/flows',data:data})
     ,onSuccess:()=>{toast.success('Fluxo criado com sucesso',{position:'top-center'})},
-    invalidateKeys:['flows']
+    invalidateKeys:['flows','historyId']
     })
 
   async function onSubmit(item:FlowsSchema){
@@ -134,4 +134,91 @@ export function useFormFlows(){
   }
 
   return {handleSubmit,onSubmit,control,reset}
+}
+export function useFormFlowsEdit(id:string,data:any){
+   const item=useDataMe()
+
+  const schemaFormFlows=z.object({
+    id_categories: z.string().min(1, "Selecione uma categoria"),
+    id_account: z.string(),
+    id_name_banks:z.string().min(1,"Deve ter pelo menos um banco"),
+    name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
+    type: z.string().min(1, "Selecione o tipo"),
+    payment: z.string().min(1, "Selecione o pagamento"),
+    price: z.string()
+      .refine((val) => !isNaN(Number(val.replace(',', '.'))), "Valor inválido")
+      .refine((val) => Number(val.replace(',', '.')) > 0, "O valor deve ser maior que zero"),
+    date: z.date()
+  })
+
+  type FlowsSchema=z.infer<typeof schemaFormFlows>
+  const {handleSubmit,control, reset}=useForm<FlowsSchema>({
+      resolver:zodResolver(schemaFormFlows),
+      defaultValues:{
+          name: '',
+          id_categories: '',
+          id_name_banks: '',
+          id_account: '',
+          type: '',
+          payment: '',
+          price: '',
+          date: new Date()
+        }
+        })
+
+    useEffect(() => {
+      if (data) {
+      reset({
+        id_categories: data.id_categories,
+        id_account: data.id_account || item?.id,
+        id_name_banks: data.id_bank,
+        name: data.name,
+        type: data.type,
+        payment: data.payment,
+        price: String(data.price), // Garanta que seja string para o input
+        date: data.date ? new Date(data.date) : new Date()
+      });
+    }
+    }, [item?.id, reset,data]);
+
+  const mutation=useMutateAction({
+    key:['flows','allflows'],
+    mutationFn:(data:FlowsSchema) => putApi({url:`/flows/${id}`,data:data})
+    ,onSuccess:()=>{toast.success('Fluxo atualizado com sucesso',{position:'top-center'})},
+    invalidateKeys:['flows','historyId','allflows']
+    })
+
+  async function onSubmit(item:FlowsSchema){
+      const formattedData = {
+        ...item,
+        price: item.price.replace(',', '.')
+      };
+      
+      mutation.mutate(formattedData)
+    
+  }
+
+  return {handleSubmit,onSubmit,control,reset}
+}
+
+export function useDeleteFlow(id:any){
+
+  const router=useRouter()
+
+  const mutation=useMutateAction({
+    key:['flows'],
+    mutationFn:() => deleteApi({url:`/flows/${id}`})
+    ,onSuccess:()=>{
+      toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
+      router.push('/main/history')
+    },
+    invalidateKeys:['flows','historyId','allflows']
+    })
+
+    function onSubmit(){
+      mutation.mutate(id)
+    }
+
+    return {onSubmit}
+
 }

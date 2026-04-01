@@ -54,7 +54,7 @@ export default function ChartTooltipPie({chartData}:IChartToolPie) {
               label
             />
           </PieChart>
-        </ChartContainer>:<CardDescription className="">Não possui dados</CardDescription>}
+        </ChartContainer>:<CardDescription className="text-center font-bold text-white">Não possui dados</CardDescription>}
       </CardContent>
     </Card>
   )

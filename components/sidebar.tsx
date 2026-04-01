@@ -5,6 +5,10 @@ import {FaTachometerAlt,FaList,FaMapPin,FaUser}from "react-icons/fa"
 import { IconType } from "react-icons"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DoorClosedIcon } from "lucide-react"
+import { Button } from "@base-ui/react"
+import { useGetQueries } from "@/hooks/methodsApi"
+import { useLogout } from "@/hooks/dashboard-action"
 
 
 type IDash={
@@ -25,6 +29,8 @@ const icons: Record<string, IconType> = {
 }
 
 export  function AppSidebar({user,array}:IPropDash) {
+
+  const {onSubmit}=useLogout()
   
   const pathname=usePathname()
  // Verifique os dados da sessão no console
@@ -52,7 +58,7 @@ export  function AppSidebar({user,array}:IPropDash) {
           )
         })}
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter className="p-20"><Button className='flex gap-2 cursor-pointer' onClick={()=>onSubmit()}> <DoorClosedIcon/> Logout </Button></SidebarFooter>
     </Sidebar>
   )
 }

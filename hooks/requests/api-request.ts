@@ -11,7 +11,7 @@ type postAxios={
 }
 
 type IdAxios={
-    id:string;
+    id?:string;
     url:string;
     data?:object;
 }
@@ -31,13 +31,13 @@ export const postApi=({url,data}:postAxios)=>{
         headers:{'Content-Type':'application/json'}})
 }
 
-export const putApi=({url,data,id}:IdAxios)=>{
+export const putApi=({url,data}:IdAxios)=>{
    return api.put(url.startsWith("/") ? url : `/${url}`,
     data,{withCredentials:true,
         headers:{'Content-Type':'application/json'}})
 }
 
-export const deleteApi=({url}:IdAxios)=>{
+export const deleteApi=({url}:postAxios)=>{
    return api.delete(url.startsWith("/") ? url : `/${url}`,
     {withCredentials:true,
     headers:{'Content-Type':'application/json'}})

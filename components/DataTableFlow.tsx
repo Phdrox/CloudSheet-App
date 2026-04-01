@@ -11,7 +11,7 @@ interface DataTableProps<TData,TValue>{
 
 export default function DataTableFlow<TData,TValue>({data,columns,isLoading}:DataTableProps<TData,TValue>) {
   
-  const table=useReactTable({data,columns,getCoreRowModel:getCoreRowModel(),})
+  const table=useReactTable({data:data ?? [],columns,getCoreRowModel:getCoreRowModel(),})
   return (
     <div className="overflow-x-auto rounded-md border">
       <Table>
@@ -57,7 +57,7 @@ export default function DataTableFlow<TData,TValue>({data,columns,isLoading}:Dat
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-24 text-center text-white">
                 No results.
               </TableCell>
             </TableRow>

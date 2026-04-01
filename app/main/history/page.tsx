@@ -5,11 +5,13 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/in
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request'
 import { ColumnDef } from '@tanstack/react-table';
-import { InfoIcon, Search } from 'lucide-react';
+import { InfoIcon, Menu, Search } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 type IFlows ={
+  id:string;
   name:string;
   type:string;
   payment:string;
@@ -39,6 +41,14 @@ export default function History() {
   
 
   const columns:ColumnDef<IFlows>[]=[
+    {
+      accessorKey:"id",
+      header:()=><div className='hidden'></div>,
+      cell:({row})=>{
+        return null
+      }
+
+    },
     {
       accessorKey:"name",
       header:"Nome",
@@ -105,14 +115,15 @@ export default function History() {
     },
     {
       accessorKey:"actions",
-      header:"Action"
+      header:"Action",
+      cell:({row})=>{
+        const id=row.getValue('id')
+        return <Link href={`/main/history/${id}`}><Menu/></Link>
+      }
     }
   ]
 
-  if(isLoading){
-    console.log('carregando')
-  }
-  const dataFlow=data?data?.data:[]
+  const dataFlow=data?data.data:[]
   
   return (
     <div className='p-10'>

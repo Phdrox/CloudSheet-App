@@ -42,7 +42,7 @@ export default function MainLayout({
 if (!data) return null;
   
 return (
-    <div className="flex bg-accent-foreground">
+    <div className="flex bg-accent-foreground ">
         <SidebarProvider className="px-3">
             <AppSidebar user={data.name} array={menuItems}/>
             <SidebarTrigger className="bg-sky-700 text-white cursor-pointer"/>

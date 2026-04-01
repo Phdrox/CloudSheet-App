@@ -31,7 +31,7 @@ export default  function Dashboard() {
     console.log('loading')
   }
 
-  const dataFlow=data?.data.map((i:any)=>i.flow)
+  const dataFlow=data?.data
 
   const gastos=SomarPrice(dataFlow,'gasto')
   const ganhos=SomarPrice(dataFlow,'ganho')
