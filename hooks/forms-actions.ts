@@ -120,7 +120,7 @@ export function useFormFlows(){
     key:['flows'],
     mutationFn:(data:FlowsSchema) => postApi({url:'/flows',data:data})
     ,onSuccess:()=>{toast.success('Fluxo criado com sucesso',{position:'top-center'})},
-    invalidateKeys:['flows','historyId']
+    invalidateKeys:['flows','allflows','historyId']
     })
 
   async function onSubmit(item:FlowsSchema){
@@ -182,10 +182,10 @@ export function useFormFlowsEdit(id:string,data:any){
     }, [item?.id, reset,data]);
 
   const mutation=useMutateAction({
-    key:['flows','allflows'],
+    key:['flows','allflows','historyId'],
     mutationFn:(data:FlowsSchema) => putApi({url:`/flows/${id}`,data:data})
     ,onSuccess:()=>{toast.success('Fluxo atualizado com sucesso',{position:'top-center'})},
-    invalidateKeys:['flows','historyId','allflows']
+    invalidateKeys:['flows','allflows']
     })
 
   async function onSubmit(item:FlowsSchema){
@@ -206,7 +206,7 @@ export function useDeleteFlow(id:any){
   const router=useRouter()
 
   const mutation=useMutateAction({
-    key:['flows'],
+    key:['historyId'],
     mutationFn:() => deleteApi({url:`/flows/${id}`})
     ,onSuccess:()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
