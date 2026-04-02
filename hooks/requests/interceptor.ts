@@ -43,16 +43,16 @@ api.interceptors.response.use(
         isRefreshing=true;
         
         return new Promise((resolve,rejects) => {
-            axios.post('/api/auth/refresh',{},{withCredentials:true})
+            api.post('/auth/refresh',{},{withCredentials:true})
             .then(() => {
                 processQueue(null)
-                resolve(api(originalRequest));
+                resolve(api({...originalRequest}));
             })
             .catch((err) => {
                 processQueue(err);
                 
                 if(typeof window !== "undefined"){
-                    Router.push("/auth/login");
+                    window.location.href = "/auth/login";
                 }
                 rejects(err);
             })
