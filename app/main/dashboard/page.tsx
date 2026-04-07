@@ -62,8 +62,8 @@ export default  function Dashboard() {
   },[data])
  
   //constante de categoria
-  const chartDataCategory=useMemo(()=>{
-    if(!dataFlow || dataFlow.legth ===0 || gastos === 0) return [];
+    const chartDataCategory=useMemo(()=>{
+    if(!dataFlow || dataFlow.length ===0 || gastos === 0) return [];
     
     const grouped=dataFlow.reduce((acc:any,item:any) => {
       if (item.type !== 'gasto') return acc;
