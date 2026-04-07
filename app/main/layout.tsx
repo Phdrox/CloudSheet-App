@@ -28,7 +28,7 @@ export default function MainLayout({
 return (
     <div className="flex bg-accent-foreground ">
         <SidebarProvider className="px-3">
-            <AppSidebar user={data.name} array={menuItems}/>
+            <AppSidebar user={data?.name || "Usuário"} array={menuItems}/>
             <SidebarTrigger className="bg-sky-700 text-white cursor-pointer"/>
             <div className="w-full">
               {children}
