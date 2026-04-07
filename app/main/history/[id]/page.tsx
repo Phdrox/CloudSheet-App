@@ -59,7 +59,9 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
 
   return (
     <div className="p-10 flex flex-col gap-4 ">
-        <Link href={'/main/history'}></Link>
+        <Link href={'/main/history'}>
+            <Button variant="outline">Voltar</Button>
+        </Link>
         <div>
             <p className="text-white text-3xl flex items-center gap-3 ">
                 {detailsId.name}

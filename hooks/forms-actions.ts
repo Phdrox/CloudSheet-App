@@ -211,11 +211,11 @@ export function useDeleteFlow(id:any){
   const mutation=useMutateAction({
     key:['deleteflow'],
     mutationFn:() => deleteApi({url:`/flows/${id}`})
-    ,onSuccess:()=>{
+    ,onSuccess:async ()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
-      router.push('/main/history')
+      await router.push('/main/history')
     },
-    invalidateKeys:['flows','historyId']
+    invalidateKeys:['flows']
     })
 
     function onSubmit(){
