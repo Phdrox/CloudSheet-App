@@ -32,7 +32,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
   const {id} =use(params)
   
   const {data,isLoading}=useGetQueries(
-    {key:['historyId','deleteflows','flows',id],
+    {key:['historyId','flows',id],
     queryFn:()=>getApi({url:`/flows/${id}`})
   })
   const detailsId=data?.data?.[0]
@@ -151,7 +151,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
                                               value={framework.name}
                                               key={framework.id}
                                               onSelect={() => {
-                                                field.onChange(framework.id) // <--- ATUALIZA O REACT HOOK FORM
+                                                field.onChange(framework.id) 
                                               }}
                                             >
                                               <Check

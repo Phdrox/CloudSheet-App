@@ -62,7 +62,7 @@ export default  function Dashboard() {
   },[data])
  
   //constante de categoria
-    const chartDataCategory=useMemo(()=>{
+  const chartDataCategory=useMemo(()=>{
     if(!dataFlow || dataFlow.length ===0 || gastos === 0) return [];
     
     const grouped=dataFlow.reduce((acc:any,item:any) => {
@@ -135,7 +135,7 @@ export default  function Dashboard() {
           </div>
           <div className="flex gap-24 justify-center">
           {
-            cardsData.map((i,index) =>(
+            cardsData?.map((i,index) =>(
               <CardPrice key={index} price={i.price} title={i.title} color={i.color} bgTitle={i.bgTitle}/>
             ))
           }

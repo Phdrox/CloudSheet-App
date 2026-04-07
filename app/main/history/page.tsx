@@ -30,7 +30,7 @@ export default function History() {
 
 
   const {data,isLoading} =useGetQueries({
-      key:['allflows','deleteflows','flows',flowName],
+      key:['flows',flowName],
       queryFn:()=> getApi({url:`/flows/allflows?search=${flowName}`}),
     
     })
@@ -96,7 +96,7 @@ export default function History() {
       accessorKey:"price",
       header:"Preço",
       cell:({row})=>{
-        const amount = parseFloat(row.getValue("price")) || 0;
+        const amount = parseFloat(row.getValue("price"))
         const type=row.getValue('type')
         const color=type=='gasto'?'text-red-500':'text-green-500'
         const formatted = new Intl.NumberFormat("pt-BR", {

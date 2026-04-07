@@ -31,7 +31,7 @@ export default function MainLayout({
     }
   }, [ isLoading,data, isError, router]);
   
- if (isLoading) {
+ if (isLoading && !data) {
   return (
     <div className="flex h-screen items-center justify-center bg-accent-foreground text-white">
       Carregando...
@@ -39,7 +39,7 @@ export default function MainLayout({
   );
 }
 
-if (!data) return null;
+if (!data && isError) return null;
   
 return (
     <div className="flex bg-accent-foreground ">

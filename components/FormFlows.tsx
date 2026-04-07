@@ -82,7 +82,6 @@ export default function FormFlows() {
                   <FieldLabel>
                       Instituição Financeira
                   </FieldLabel>
-                  <FieldDescription>Use a seta do teclado pra cima ou pra baixo para navegar na lista</FieldDescription>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -96,7 +95,7 @@ export default function FormFlows() {
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-86 p-0 ">
+                    <PopoverContent className="w-86 p-0 " onWheel={(e) => e.stopPropagation()}>
                       <Command>
                         <CommandInput placeholder="Selecione uma Instituição" />
                         <CommandList>
