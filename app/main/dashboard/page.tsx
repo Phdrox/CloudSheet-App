@@ -63,7 +63,7 @@ export default  function Dashboard() {
  
   //constante de categoria
   const chartDataCategory=useMemo(()=>{
-    if(!dataFlow) return [];
+    if(!dataFlow || dataFlow.legth ===0 || gastos === 0) return [];
     
     const grouped=dataFlow.reduce((acc:any,item:any) => {
       if (item.type !== 'gasto') return acc;
@@ -84,7 +84,7 @@ export default  function Dashboard() {
       fill: `var(--chart-${(index % 5) + 1})`
     })).sort((a:any,b:any) => 
     b.gasto - a.gasto);
-  },[data,gastos])
+  },[dataFlow,gastos])
 
   const configChart={
     ganho:{
@@ -145,9 +145,7 @@ export default  function Dashboard() {
             <ChartTooltipPie chartData={chartDataCategory} />
           </div>
           
-      </div>
-        
-        
+      </div>       
     </div>
   )
 }
