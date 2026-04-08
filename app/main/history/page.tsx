@@ -31,7 +31,7 @@ export default function History() {
 
   const {data,isLoading} =useGetQueries({
       key:['flows',flowName],
-      queryFn:()=> getApi({url:`/flows/allflows?search=${flowName}`}),
+      queryFn:()=> getApi({url:`/flows/allflows?${flowName?'search='+flowName:''}`}),
       retry:false
     })
   
@@ -123,8 +123,9 @@ export default function History() {
     }
   ]
 
-  const dataFlow=data?data.data:[]
+  const dataFlow=(data?.data && data.data.length > 0)?data?.data:[]
   
+  console.log(dataFlow)
   return (
     <div className='p-10'>
       <div className='w-full text-2xl text-white flex justify-center'>Histórico</div>

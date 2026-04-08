@@ -214,6 +214,7 @@ export function useDeleteFlow(id:string){
     ,onSuccess:async ()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
       router.replace('/main/history');
+      
     },
     invalidateKeys:['flows',id]
     })

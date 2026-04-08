@@ -3,6 +3,7 @@ import AppSidebar from "@/components/sidebar"
 import { SidebarProvider,SidebarTrigger } from "@/components/ui/sidebar"
 import { useGetQueries } from "@/hooks/methodsApi"
 import { getApi } from "@/hooks/requests/api-request"
+import { LoaderCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -29,9 +30,10 @@ export default function MainLayout({
     [isLoading, data, isError, router]) 
 
     if (isLoading) {
-      return <div >Loading...</div>
+      return <div className="flex justify-center items-center h-screen"><LoaderCircle className="text-white animate-spin"/></div>
     }
-
+ 
+    console.log(data)
 
 return (
     <div className="flex bg-accent-foreground ">

@@ -1,5 +1,5 @@
 'use client'
-import { Sidebar, SidebarGroupLabel } from "./ui/sidebar"
+import { Sidebar, SidebarGroupLabel, SidebarMenuButton } from "./ui/sidebar"
 import {SidebarFooter, SidebarHeader,SidebarContent} from "./ui/sidebar"
 import {FaTachometerAlt,FaList,FaMapPin,FaUser}from "react-icons/fa"
 import { IconType } from "react-icons"
@@ -42,11 +42,17 @@ export  function AppSidebar({user,array}:IPropDash) {
         </span>
       <SidebarHeader />
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
-      <SidebarContent>
-          {array.map((item) => {
+      <SidebarContent className="flex flex-col gap-2">
+          {array?.map((item) => {
           const Icon=icons[item.icon]
           const isActive=pathname===item.url
           return (
+            <SidebarMenuButton 
+            asChild 
+            isActive={isActive}
+            className="font-raleway"
+            key={item.name}
+          >
             <Link
               key={item.name}
               href={item.url}
@@ -55,6 +61,7 @@ export  function AppSidebar({user,array}:IPropDash) {
               <Icon size={18} className=""/>
               {item.name}
             </Link>
+            </SidebarMenuButton>
           )
         })}
       </SidebarContent>
