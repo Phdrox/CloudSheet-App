@@ -170,7 +170,7 @@ export function useFormFlowsEdit(id:string,data:any){
         })
 
     useEffect(() => {
-      if (data) {
+      if (data && data.id_categories) {
       reset({
         id_categories: data.id_categories,
         id_account: data.id_account || item?.id,
@@ -204,13 +204,13 @@ export function useFormFlowsEdit(id:string,data:any){
   return {handleSubmit,onSubmit,control,reset}
 }
 
-export function useDeleteFlow(id:any){
+export function useDeleteFlow(){
 
   const router=useRouter()
 
   const mutation=useMutateAction({
     key:['deleteflow'],
-    mutationFn:() => deleteApi({url:`/flows/${id}`})
+    mutationFn:(id:string) => deleteApi({url:`/flows/${id}`})
     ,onSuccess:async ()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
       await router.push('/main/history')
@@ -218,10 +218,11 @@ export function useDeleteFlow(id:any){
     invalidateKeys:['flows']
     })
 
-    function onSubmit(){
+    function onSubmit(id:string){
+      if(!id) return
       mutation.mutate(id)
     }
 
-    return {onSubmit}
+    return {onSubmit,isDeleting:mutation.isPending}
 
 }

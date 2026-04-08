@@ -20,15 +20,23 @@ export default function MainLayout({
    staleTime: 1000 * 60 * 5 }) 
    
    useEffect(() => { 
-    if (!isLoading && (!data || isError)) { 
-      router.push("/auth/login") 
-    } }, 
+   const isUnauthorized = isError && (data as any)?.status === 401;
+
+  if (!isLoading && (isUnauthorized || (!data && !isLoading && isError))) {
+   
+    router.replace('/auth/login');
+  } }, 
     [isLoading, data, isError, router]) 
+
+    if (isLoading) {
+      return <div >Loading...</div>
+    }
+
 
 return (
     <div className="flex bg-accent-foreground ">
         <SidebarProvider className="px-3">
-            <AppSidebar user={data?.name || "Usuário"} array={menuItems}/>
+            <AppSidebar user={data?.name} array={menuItems}/>
             <SidebarTrigger className="bg-sky-700 text-white cursor-pointer"/>
             <div className="w-full">
               {children}

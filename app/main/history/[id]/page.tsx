@@ -41,7 +41,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
   const itemsBank=banks?.data?.data || [];
 
   const {handleSubmit,control,reset,onSubmit}=useFormFlowsEdit(id,detailsId)
-  const deleteFlow=useDeleteFlow(id)
+  const deleteFlow=useDeleteFlow()
   
   const category=useGetQueries({key:['category'],queryFn:()=>getApi({url:'/category'})})
   const itemsCategory=category?.data?.data || []
@@ -73,7 +73,9 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
         </div>
         <div className="flex justify-between">
            <Card className="text-white  p-1 w-1/6 dark shadow-lg text-center text-lg">{new Date(detailsId.date).toLocaleDateString('pt-BR')}</Card> 
-           <Button className="bg-red-500 p-4 cursor-pointer" onClick={()=>deleteFlow.onSubmit()} >Delete</Button>
+           <Button className="bg-red-500 p-4 cursor-pointer" onClick={()=>deleteFlow.onSubmit(id)} >
+            {deleteFlow.isDeleting ? 'Deletando...' : 'Deletar'}
+           </Button>
         </div>
 
         <div >
