@@ -215,7 +215,7 @@ export function useDeleteFlow(id:string){
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
       router.replace('/main/history');
     },
-    invalidateKeys:['flows',id]
+    invalidateKeys:['flows',id,'deleteflow']
     })
 
     function onSubmit(id:string){
