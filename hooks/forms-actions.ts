@@ -204,7 +204,7 @@ export function useFormFlowsEdit(id:string,data:any){
   return {handleSubmit,onSubmit,control,reset}
 }
 
-export function useDeleteFlow(){
+export function useDeleteFlow(id:string){
 
   const router=useRouter()
 
@@ -215,7 +215,7 @@ export function useDeleteFlow(){
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
       router.replace('/main/history');
     },
-    invalidateKeys:['flows']
+    invalidateKeys:['flows',id]
     })
 
     function onSubmit(id:string){

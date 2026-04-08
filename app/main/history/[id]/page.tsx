@@ -41,7 +41,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
   const itemsBank=banks?.data?.data || [];
 
   const {handleSubmit,control,reset,onSubmit}=useFormFlowsEdit(id,detailsId)
-  const deleteFlow=useDeleteFlow()
+  const deleteFlow=useDeleteFlow(id)
   
   const category=useGetQueries({key:['category'],queryFn:()=>getApi({url:'/category'})})
   const itemsCategory=category?.data?.data || []
