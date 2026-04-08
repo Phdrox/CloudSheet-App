@@ -32,7 +32,7 @@ export default function History() {
   const {data,isLoading} =useGetQueries({
       key:['flows',flowName],
       queryFn:()=> getApi({url:`/flows/allflows?search=${flowName}`}),
-    
+      retry:false
     })
   
     if(isLoading){

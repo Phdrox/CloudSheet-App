@@ -170,16 +170,16 @@ export function useFormFlowsEdit(id:string,data:any){
         })
 
     useEffect(() => {
-      if (data && data.id_categories) {
+      if (data && data?.id_categories) {
       reset({
-        id_categories: data.id_categories,
-        id_account: data.id_account || item?.id,
-        id_name_banks: data.id_bank,
-        name: data.name,
-        type: data.type,
-        payment: data.payment,
-        price: String(data.price), // Garanta que seja string para o input
-        date: data.date ? new Date(data.date) : new Date()
+        id_categories: data?.id_categories,
+        id_account: data?.id_account || item?.id,
+        id_name_banks: data?.id_bank,
+        name: data?.name,
+        type: data?.type,
+        payment: data?.payment,
+        price: String(data?.price), // Garanta que seja string para o input
+        date: data?.date ? new Date(data?.date) : new Date()
       });
     }
     }, [item?.id, reset,data]);
@@ -213,7 +213,7 @@ export function useDeleteFlow(){
     mutationFn:(id:string) => deleteApi({url:`/flows/${id}`})
     ,onSuccess:async ()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
-      await router.push('/main/history')
+      router.replace('/main/history');
     },
     invalidateKeys:['flows']
     })
