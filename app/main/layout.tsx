@@ -16,7 +16,7 @@ export default function MainLayout({
   
  const menuItems = [ { name: "Dashboard", icon: "dashboard", url: "/main/dashboard", allowed: ["admin", "all"] },
   { name: "Histórico", icon: "history", url: "/main/history", allowed: ["admin", "all"] }, { name: "Metas", icon: "goals", url: "/main/goals", allowed: ["admin", "all"] },
-   { name: "Users", icon: "user", url: "/main/users", allowed: ["admin"] }, ] 
+  { name: "Users", icon: "user", url: "/main/users", allowed: ["admin"] }, ] 
    const { data, isLoading, isError } = useGetQueries({ key: ["profile"], queryFn: () => getApi({ url: "/auth/profile" }), 
    staleTime: 1000 * 60 * 5 }) 
    
@@ -32,8 +32,6 @@ export default function MainLayout({
     if (isLoading) {
       return <div className="flex justify-center items-center h-screen"><LoaderCircle className="text-white animate-spin"/></div>
     }
- 
-    console.log(data)
 
 return (
     <div className="flex bg-accent-foreground ">

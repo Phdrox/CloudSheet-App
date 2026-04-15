@@ -20,6 +20,7 @@ import { useDeleteFlow, useFormFlowsEdit } from "@/hooks/forms-actions"
 import { ptBR } from "date-fns/locale"
 import {format} from "date-fns"
 import { cn } from '@/lib/utils'
+import { Toaster } from "sonner"
 
  type IFlows={
     type_categorie:string;
@@ -59,6 +60,7 @@ export default function HistoryDetails({params,}:{params:Promise<{id:string}>}) 
 
   return (
     <div className="p-10 flex flex-col gap-4 ">
+      <Toaster/>
         <Link href={'/main/history'}>
             <Button variant="outline">Voltar</Button>
         </Link>

@@ -8,6 +8,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { InfoIcon, Menu, Search } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { Toaster } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
 
 type IFlows ={
@@ -125,9 +126,9 @@ export default function History() {
 
   const dataFlow=(data?.data && data.data.length > 0)?data?.data:[]
   
-  console.log(dataFlow)
   return (
     <div className='p-10'>
+      <Toaster/>
       <div className='w-full text-2xl text-white flex justify-center'>Histórico</div>
       <div >
         <div className='w-full flex my-3 '> 

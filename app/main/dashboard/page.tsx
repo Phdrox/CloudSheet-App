@@ -125,8 +125,7 @@ export default  function Dashboard() {
       <div className="flex flex-col">
         <div className="w-full flex justify-center text-2xl text-white ">
             Dashboard
-          </div>
-          
+          </div> 
           <Toaster/>
           <div className="flex justify-end pb-6 ">
               <FormSheet title="Criar" description="Preencha os dados para criar um fluxo" buttonSheetName="Criar Fluxo" children={

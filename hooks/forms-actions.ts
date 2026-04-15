@@ -227,3 +227,54 @@ export function useDeleteFlow(id:string){
     return {onSubmit,isDeleting:mutation.isPending}
 
 }
+
+export function useFormGoal(){
+   const item=useDataMe()
+
+  const schemaFormGoal=z.object({
+    id_account: z.string(),
+    name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
+    value:z.string().min(1),
+    have:z.string()
+  })
+
+  type GoalSchema=z.infer<typeof schemaFormGoal>
+  const {handleSubmit,control, reset}=useForm<GoalSchema>({
+      resolver:zodResolver(schemaFormGoal),
+      defaultValues:{
+        id_account:item.id || '',
+        name:'',
+        value:'',
+        have:''
+      }
+  })
+
+    useEffect(() => {
+      if (item?.id) {
+      reset((prev)=>({...prev,id_account:item.id}));
+    }
+    }, [item?.id, reset]);
+
+  const mutation=useMutateAction({
+    key:['goal'],
+    mutationFn:(data:GoalSchema) => postApi({url:'/goals',data:data})
+    ,onSuccess:()=>{
+      toast.success('Fluxo criado com sucesso',{position:'top-center'})
+    },
+    invalidateKeys:['goals']
+  
+    })
+
+  async function onSubmit(item:GoalSchema){
+      const formattedData = {
+        ...item,
+        have: item.have.replace(',', '.'),
+        value:item.value.replace(',','.')
+      };
+      
+      mutation.mutate(formattedData)
+    
+  }
+
+  return {handleSubmit,onSubmit,control,reset}
+}

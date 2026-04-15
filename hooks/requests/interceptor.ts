@@ -1,7 +1,4 @@
 import axios from "axios";
-import Router from "next/router";
-
-
 let isRefreshing = false;
 let failedQueue: any[] = [];
 
