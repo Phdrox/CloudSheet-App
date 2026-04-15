@@ -25,21 +25,22 @@ export default function CardGoal({ name, value, have, data}: CardGoalProps) {
             </PieChart>
          </CardContent>
         </Card>:
-        <Card className="dark shadow-lg w-1/4">
+        <Card className="dark shadow-lg w-1/3">
          <CardContent>
             <Empty>
-              <EmptyHeader>Sem metas aqui ainda</EmptyHeader>
+              <EmptyHeader>Nenhuma meta registrada</EmptyHeader> 
+              <FormSheet 
+                buttonSheetName="Criar uma meta" 
+                children={<FormGoal/>} 
+                title="Cadastro de Metas"
+                 description="Registre suas metas aqui"
+            />
               <EmptyDescription>
                 Você não tem nenhuma meta. 
-                Crie uma apertando esse card.
+                Crie uma apertando o botão "Criar uma meta".
               </EmptyDescription>
             </Empty>
-            <FormSheet 
-            buttonSheetName="Criar uma meta" 
-            children={<FormGoal/>} 
-            title="Cadastro de Metas"
-            description="Registre suas metas aqui"
-            />
+           
          </CardContent>
         </Card>
         

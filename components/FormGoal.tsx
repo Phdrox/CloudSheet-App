@@ -13,14 +13,17 @@ const {handleSubmit,reset,control,onSubmit}=useFormGoal()
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-         <FieldGroup className="text-white">
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+         <FieldGroup className="text-white p-3">
            <Controller name='name' control={control} render={()=>(
-            <Input type='text'/>
+            <Field className='w-full'>
+              <FieldLabel>Nome da meta</FieldLabel>
+            <Input type='text' placeholder='Insira o nome da meta'/>
+            </Field>
            )}/>
            <Controller name='value' control={control} render={({field,fieldState})=>(
-              <Field className='w-1/2'>
-                    <FieldLabel>Valor</FieldLabel>
+              <Field className='w-full'>
+                    <FieldLabel>Valor que você precisa para cumprir a meta</FieldLabel>
                      <InputGroup>
                         <InputGroupAddon>
                         <InputGroupText>R$</InputGroupText>
@@ -39,8 +42,8 @@ const {handleSubmit,reset,control,onSubmit}=useFormGoal()
                 </Field>   
            )}/>
            <Controller name='have' control={control} render={({field,fieldState})=>(
-              <Field className='w-1/2'>
-                    <FieldLabel>Valor</FieldLabel>
+              <Field className='w-full'>
+                    <FieldLabel>Valor que você tem para meta</FieldLabel>
                      <InputGroup>
                         <InputGroupAddon>
                         <InputGroupText>R$</InputGroupText>
@@ -58,9 +61,8 @@ const {handleSubmit,reset,control,onSubmit}=useFormGoal()
                     </InputGroup>
                 </Field>   
            )}/>
-
         </FieldGroup>
-        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white dura tion-300 p-6'>Cadastrar</Button>
+        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white dura tion-300 p-4'>Cadastrar</Button>
     </form>
   )
 }
