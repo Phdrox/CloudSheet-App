@@ -32,6 +32,7 @@ export default function FormRegister() {
                            placeholder="Exemplo" {...field} 
                            className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'}`}/>
                         </div> 
+                        {fieldState.error && (<p className="text-sm font-medium text-destructive"> {fieldState.error.message}</p>)}
                     </div>
                     )}/> 
                 
@@ -46,7 +47,9 @@ export default function FormRegister() {
                            type="email" 
                            placeholder="m@example.com" {...field} 
                            className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'}`}/>
+                           {fieldState.error && (<p className="text-sm font-medium text-destructive"> {fieldState.error.message}</p>)}
                       </div>    
+                      
                 )}/>
 
                 <Controller 
@@ -60,6 +63,7 @@ export default function FormRegister() {
                         type="password" 
                         placeholder="xxxxxxxxx"  {...field} 
                         className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'}`}/>
+                        {fieldState.error && (<p className="text-sm font-medium text-destructive"> {fieldState.error.message}</p>)}
                     </div>
                 )} />      
                 <CardFooter className='flex justify-center text-primary bg-accent-foreground gap-3 flex-col '>

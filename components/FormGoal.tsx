@@ -5,12 +5,9 @@ import { Field, FieldGroup, FieldLabel } from './ui/field'
 import { Input } from './ui/input'
 import { useFormGoal } from '@/hooks/forms-actions'
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from './ui/input-group'
-
 export default function FormGoal() {
  
 const {handleSubmit,reset,control,onSubmit}=useFormGoal()
-
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>

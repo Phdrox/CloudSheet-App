@@ -13,14 +13,14 @@ import { useDataMe } from "./useMe"
 export function useFormRegister() {
   const router=useRouter()
   const schemaFormRegister= z.object({
-    name: z.string().min(9,"Preencha o campo nome"),
-    email: z.email("Email inválido").min(9,"Preecha o campo email"),
-    password: z.string().min(8,"A senha deve ter no mínimo 8 caracteres"),
+    name: z.string("Preencha o campo nome").min(1,"deve ter no minímo 1 caractere"),
+    email: z.email("Preencha o campo email").min(6,"deve ter no minímo 6 caractere ou não está no padrão"),
+    password: z.string("Preencha o campo senha").min(8,"A senha deve ter no mínimo 8 caracteres"),
   })
 
   type RegisterSchema = z.infer<typeof schemaFormRegister>
 
-  const {handleSubmit, control, reset } = useForm<RegisterSchema>({
+  const {handleSubmit, control, reset} = useForm<RegisterSchema>({
     resolver: zodResolver(schemaFormRegister),
     defaultValues:{
         name:'',
@@ -52,13 +52,14 @@ export function useFormRegister() {
 export function useFormLogin() {
   const router=useRouter()
   const schemaFormLogin = z.object({
-    email: z.email(),
-    password: z.string(),
+    email: z.email("Preencha o campo email").min(6,"Seu email tem menos que 6 caractere ou está inválido"),
+    password: z.string().min(8,"Sua senha é menor que 8 caractere"),
   })
 
   type LoginSchema = z.infer<typeof schemaFormLogin>
-  const {handleSubmit, control, reset }= useForm<LoginSchema>({
+  const {handleSubmit, control, reset,setError}= useForm<LoginSchema>({
     resolver: zodResolver(schemaFormLogin),
+    mode:"onSubmit",
     defaultValues:{
         email:'',
         password:'',
@@ -66,9 +67,12 @@ export function useFormLogin() {
   })
   
   const mutation=useMutateAction({
-        key:['login'],
-        mutationFn: (data: LoginSchema) => postApi({url:'/auth/login',data}),
-        onSuccess:()=>{router.push('/main/dashboard')},
+     key:['login'],
+     mutationFn: (data: LoginSchema) => postApi({url:'/auth/login',data}),
+     onSuccess:()=>{router.push('/main/dashboard')},
+     onError:()=>{
+       toast.error('Email ou senha',{position:'top-center'})
+     },
   })
 
   async function onSubmit(item: LoginSchema) {
@@ -76,7 +80,7 @@ export function useFormLogin() {
   }
 
 
-  return {onSubmit,reset,handleSubmit,control}
+  return {onSubmit,reset,handleSubmit,control,setError}
 }
 
 export function useFormFlows(){
@@ -86,7 +90,7 @@ export function useFormFlows(){
     id_categories: z.string().min(1, "Selecione uma categoria"),
     id_account: z.string(),
     id_name_banks:z.string().min(1,"Deve ter pelo menos um banco"),
-    name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
+    name: z.string().min(1, "Deve ter no mínimo 1 caractere"),
     type: z.string().min(1, "Selecione o tipo"),
     payment: z.string().min(1, "Selecione o pagamento"),
     price: z.string()
@@ -122,6 +126,7 @@ export function useFormFlows(){
     ,onSuccess:()=>{
       toast.success('Fluxo criado com sucesso',{position:'top-center'})
     },
+
     invalidateKeys:['flows']
   
     })
@@ -233,7 +238,7 @@ export function useFormGoal(){
 
   const schemaFormGoal=z.object({
     id_account: z.string(),
-    name: z.string().min(1, "Deve ter no mínimo 5 caracteres"),
+    name: z.string().min(1, "Deve ter no mínimo 1 caractere"),
     value:z.string().min(1),
     have:z.string()
   })

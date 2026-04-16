@@ -19,15 +19,18 @@ export default function FormLogin() {
         </CardHeader>
         <CardContent>
             <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
-                <Controller name='email' control={control} render={({field,fieldState}) => (
+                <Controller name='email' control={control} render={({field,fieldState,formState}) =>(
+                    
                     <div className='grid gap-2'>
                         <Label>Email</Label>
                         <Input type="email" {...field} 
                         placeholder="m@example.com" 
-                        
-                        className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'}`}/>
+                        className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'} `}/>
+                        {fieldState.error && (<p className="text-sm font-medium text-destructive"> {fieldState.error.message}</p>)}
                     </div>
-                )} />
+                )
+                
+                } />
                 
                 <Controller
                     name='password' control={control} render={({field,fieldState}) => (
@@ -37,6 +40,7 @@ export default function FormLogin() {
                             placeholder="xxxxxxxxx" 
                              {...field} 
                             className={`border ${fieldState.error?'border-red-500':'border-muted-foreground'} `}/>
+                            {fieldState.error && (<p className="text-sm font-medium text-destructive"> {fieldState.error.message}</p>)}
                         </div>
                     ) } 
                 />

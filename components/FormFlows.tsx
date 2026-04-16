@@ -214,7 +214,7 @@ export default function FormFlows() {
                 </Field>
             )}/>
         </FieldGroup>
-        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white duration-300 p-6'>Enviar</Button>
+        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white duration-300 p-4'>Enviar</Button>
     </form>
   )
 }
