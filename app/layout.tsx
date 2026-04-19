@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
    <html lang="pt-BR" >
     <ReactQueryProvider>
-      <body className={`${raleway.className} bg-accent-foreground min-h-screen overflow-y-hidden`}>
+      <body className={`${raleway.className} bg-accent-foreground min-h-screen`}>
           {children}
       </body>
     </ReactQueryProvider>

@@ -44,9 +44,9 @@ export default  function Dashboard() {
      const date = item.date.split('T')[0].split('-'); 
      const year = parseInt(date[0]);
      const month = parseInt(date[1]);
-       const dateKey=`${year}-${month}`;
-       
-       if(year !== new Date().getFullYear()) return acc
+      const dateKey=`${year}-${month}`;
+      
+      if(year !== new Date().getFullYear()) return acc
        
       if(!acc[dateKey]){
         const formatDate = new Date(year, month - 1, 1);
@@ -142,8 +142,7 @@ export default  function Dashboard() {
           <div className="w-full pt-2 flex gap-5 justify-around">
             <ChartTooltipUI chartData={chartDataPrice} configuration={configChart}/>
             <ChartTooltipPie chartData={chartDataCategory} />
-          </div>
-          
+          </div>   
       </div>       
     </div>
   )

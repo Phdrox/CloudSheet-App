@@ -1,11 +1,21 @@
 
+import { Features } from "@/components/Features";
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { Pricing } from "@/components/Pricing";
+import { Technologies } from "@/components/Technologies";
+import Image from "next/image";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-transparent">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-transparent  dark:bg-transparent sm:items-start">
-       
-      </main>
-    </div>
+    <main className="min-h-screen flex flex-col bg-white dark:bg-background">
+       <Navbar />
+      <Hero />
+      <Features />
+      <Technologies />
+      <Pricing />
+      <Footer />
+    </main>
   );
 }

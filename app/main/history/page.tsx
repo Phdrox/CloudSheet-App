@@ -21,14 +21,12 @@ type IFlows ={
   date:Date|any;
 }
 
-
 export default function History() {
 
   const [flowName,setFlowName]=useState('')
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setFlowName(value);
   }, 200);
-
 
   const {data,isLoading} =useGetQueries({
       key:['flows',flowName],
@@ -40,7 +38,6 @@ export default function History() {
       console.log('loading')
     }
   
-
   const columns:ColumnDef<IFlows>[]=[
     {
       accessorKey:"id",
@@ -138,11 +135,9 @@ export default function History() {
              <Search/>
             </InputGroupAddon>
           </InputGroup>
-
         </div>
         <DataTableFlow data={dataFlow} columns={columns} isLoading={isLoading}/>
       </div>
-     
     </div>
   )
 }

@@ -12,7 +12,7 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const router = useRouter()
+ const router = useRouter()
   
  const menuItems = [ { name: "Dashboard", icon: "dashboard", url: "/main/dashboard", allowed: ["admin", "all"] },
   { name: "Histórico", icon: "history", url: "/main/history", allowed: ["admin", "all"] }, { name: "Metas", icon: "goals", url: "/main/goals", allowed: ["admin", "all"] },

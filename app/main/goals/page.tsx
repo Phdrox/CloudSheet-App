@@ -2,14 +2,12 @@
 import CardGoal from '@/components/CardGoal';
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request';
-import { useMemo } from 'react';
 
 export type Goal={
   have:string;
   value:string;
   name?:string;
 }
-
 
 export default function Goals() {
   const {data,isLoading}=useGetQueries({
@@ -23,7 +21,7 @@ export default function Goals() {
   }
   
    const dataGoal=data?.data
-   console.log(dataGoal)
+   
    const DataPie=()=>{
     dataGoal?.length==0 && []
     const total= dataGoal?.map((i:Goal) => Number(i.value))
