@@ -1,42 +1,22 @@
 'use client'
 import CardGoal from '@/components/CardGoal';
+import FormGoal from '@/components/FormGoal';
+import FormSheet from '@/components/FormSheet';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request';
+import { cx } from 'class-variance-authority';
+import { cy } from 'date-fns/locale/cy';
+import { Label, Pie, PieChart, ResponsiveContainer } from "recharts"
+
 
 export type Goal={
   have:string;
   value:string;
   name?:string;
 }
-
-export default function Goals() {
-  const {data,isLoading}=useGetQueries({
-    key:['goals'],
-    queryFn:()=>getApi({url:'/goals/mygoals'})
-
-  })
-
-  if (isLoading){
-    console.log('loading')
-  }
-  
-   const dataGoal=data?.data
-   
-   const DataPie=()=>{
-    dataGoal?.length==0 && []
-    const total= dataGoal?.map((i:Goal) => Number(i.value))
-    const current= dataGoal?.map((i:Goal) => Number(i.have) )
-
-   const dataPie=[
-    {goal:'have',values:current},
-    {goal:'value',values:total - current}
-  ]
-
-    return dataPie
-  }
-  
-  const configData={
-    values:{
+const configData={
+    type:{
       label:"Valores",
     },
     have:{
@@ -46,16 +26,102 @@ export default function Goals() {
     value:{
       label:"Preciso",
       color:"var(--color-ring)"
-
     }
-   }
+   } satisfies ChartConfig
+
+export default function Goals() {
+  const { data, isLoading } = useGetQueries({
+    key: ['goals'],
+    queryFn: () => getApi({ url: '/goals/mygoals' })
+  });
+
+  const dataGoal = data?.data;
+
+  // Renderização de loading simples
+  if (isLoading) return <p className="text-white">Carregando metas...</p>;
+
   return (
     <div className='p-5 pt-7'>
-        <div className="w-full flex justify-center text-2xl text-white ">
-            Metas
-        </div> 
-      <CardGoal data={DataPie()} config={configData} />
-     
+      <div className="w-full flex justify-center text-2xl text-white">
+        <p className='w-full flex justify-center'>Metas</p>
+        <div className='flex justify-end'>
+          <FormSheet
+            buttonSheetName="Criar uma meta"
+            title="Cadastro de Metas"
+            description="Registre suas metas aqui"
+          >
+            <FormGoal />
+          </FormSheet>
+        </div>
+      </div>
+
+      <div className='w-full flex justify-start mt-5 gap-5 flex-wrap'>
+        {dataGoal?.length > 0 ? dataGoal.map((item: Goal, index: number) => {
+          
+          // 1. Transformamos o item individual em um array de 2 fatias
+          const chartData = [
+            { type: 'have', amount: Number(item.have), fill: 'var(--color-have)' },
+            { type: 'value', amount: Math.max(0, Number(item.value) - Number(item.have)), fill: 'var(--color-value)' }
+          ];
+
+          return (
+            <CardGoal key={index} name={item.name!}>
+              <div className="h-[200px] w-[300px]"> 
+                <ChartContainer config={configData}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart outerRadius={100}>
+                      <ChartTooltip content={<ChartTooltipContent hideLabel  />} />
+                      <Pie
+                        data={chartData}
+                        dataKey="amount" 
+                        nameKey="type"   
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        stroke="none"
+                      >
+                          <Label
+                            content={({ viewBox }) => {
+                              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                return (
+                                  <text
+                                    x={viewBox.cx}
+                                    y={viewBox.cy}
+                                    textAnchor="middle"
+                                    dominantBaseline="middle"
+                                  >   
+                                      <tspan
+                                          x={viewBox.cx}
+                                          y={(viewBox.cy || 0) - 8}
+                                          className="fill-foreground font-bold"
+                                      >
+                                        {Math.max(0, Number(item.value) - Number(item.have))}
+                                      </tspan>
+                                
+                                      <tspan
+                                          x={viewBox.cx}
+                                          y={(viewBox.cy || 0) + 24}
+                                          className="fill-muted-foreground text-md font-semibold"
+                                      >
+                                          Falta 
+                                      </tspan>
+                                  </text>
+                                )
+                              }
+                            }}
+                          />
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
+            </CardGoal>
+          );
+        }) : (
+          <p className='text-white text-lg'>Nenhuma meta encontrada.</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -10,12 +10,12 @@ export default function FormGoal() {
 const {handleSubmit,reset,control,onSubmit}=useFormGoal()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+    <form id='form-goals' onSubmit={handleSubmit(onSubmit,(errors) => console.log("Erros do Zod:", errors))} className='flex flex-col gap-4'>
          <FieldGroup className="text-white p-3">
-           <Controller name='name' control={control} render={()=>(
+           <Controller name='name' control={control} render={({field,fieldState})=>(
             <Field className='w-full'>
               <FieldLabel>Nome da meta</FieldLabel>
-            <Input type='text' placeholder='Insira o nome da meta'/>
+            <Input {...field} type='text' placeholder='Insira o nome da meta' aria-invalid={fieldState.invalid}/>
             </Field>
            )}/>
            <Controller name='value' control={control} render={({field,fieldState})=>(
@@ -59,7 +59,7 @@ const {handleSubmit,reset,control,onSubmit}=useFormGoal()
                 </Field>   
            )}/>
         </FieldGroup>
-        <Button type='submit' form="form-flows" className='cursor-pointer hover:bg-accent hover:text-white dura tion-300 p-4'>Cadastrar</Button>
+        <Button type='submit' form="form-goals" className='cursor-pointer hover:bg-accent hover:text-white dura tion-300 p-4'>Cadastrar</Button>
     </form>
   )
 }

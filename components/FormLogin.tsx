@@ -20,7 +20,6 @@ export default function FormLogin() {
         <CardContent>
             <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
                 <Controller name='email' control={control} render={({field,fieldState,formState}) =>(
-                    
                     <div className='grid gap-2'>
                         <Label>Email</Label>
                         <Input type="email" {...field} 

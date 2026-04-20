@@ -238,8 +238,8 @@ export function useFormGoal(){
 
   const schemaFormGoal=z.object({
     id_account: z.string(),
-    name: z.string().min(1, "Deve ter no mínimo 1 caractere"),
-    value:z.string().min(1),
+    name: z.string(),
+    value:z.string(),
     have:z.string()
   })
 
@@ -278,7 +278,7 @@ export function useFormGoal(){
       };
       
       mutation.mutate(formattedData)
-    
+      
   }
 
   return {handleSubmit,onSubmit,control,reset}
