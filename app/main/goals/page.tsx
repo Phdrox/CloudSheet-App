@@ -40,7 +40,28 @@ export default function Goals() {
   const dataGoal = data?.data;
 
   if (isLoading) return <p className="text-white">Carregando metas...</p>;
+ const formart=(value:number)=>{
+  const numberValue = value;
+  if (value<1000){
+    const formartValues=new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits:2,
+    }).format(numberValue);
 
+    return formartValues;
+  }
+  else{
+     const formartValues=new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      notation: "compact",
+      compactDisplay: "short"
+    }).format(numberValue);
+
+    return formartValues;
+  }
+ }
   return (
     <div className='p-5 pt-7'>
       <div className="w-full flex justify-center text-2xl text-white">
@@ -101,7 +122,7 @@ export default function Goals() {
                                           y={(viewBox.cy || 0) - 8}
                                           className="fill-foreground font-bold"
                                       >
-                                        {Math.max(0, Number(item.value) - Number(item.have))}
+                                        {formart(Math.max(0, Number(item.value) - Number(item.have)))}
                                       </tspan>
                                 
                                       <tspan
