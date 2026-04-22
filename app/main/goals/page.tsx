@@ -3,17 +3,19 @@ import CardGoal from '@/components/CardGoal';
 import FormGoal from '@/components/FormGoal';
 import FormSheet from '@/components/FormSheet';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { useDeleteGoal } from '@/hooks/forms-actions';
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request';
-import { cx } from 'class-variance-authority';
-import { cy } from 'date-fns/locale/cy';
+import { id } from 'date-fns/locale';
 import { Label, Pie, PieChart, ResponsiveContainer } from "recharts"
 
 
 export type Goal={
   have:string;
   value:string;
+  id?:string;
   name?:string;
+  id_account?:string;
 }
 const configData={
     type:{
@@ -34,10 +36,9 @@ export default function Goals() {
     key: ['goals'],
     queryFn: () => getApi({ url: '/goals/mygoals' })
   });
-
+  
   const dataGoal = data?.data;
 
-  // Renderização de loading simples
   if (isLoading) return <p className="text-white">Carregando metas...</p>;
 
   return (
@@ -57,15 +58,19 @@ export default function Goals() {
 
       <div className='w-full flex justify-start mt-5 gap-5 flex-wrap'>
         {dataGoal?.length > 0 ? dataGoal.map((item: Goal, index: number) => {
-          
-          // 1. Transformamos o item individual em um array de 2 fatias
           const chartData = [
             { type: 'have', amount: Number(item.have), fill: 'var(--color-have)' },
             { type: 'value', amount: Math.max(0, Number(item.value) - Number(item.have)), fill: 'var(--color-value)' }
           ];
-
+           
           return (
-            <CardGoal key={index} name={item.name!}>
+            <CardGoal key={index} name={item.name!} id={item.id!} data={{
+              have: item.have,
+              id_account: item.id_account!,
+              value:item.value,
+              name: item.name!
+            }
+            }>
               <div className="h-[200px] w-[300px]"> 
                 <ChartContainer config={configData}>
                   <ResponsiveContainer width="100%" height="100%">

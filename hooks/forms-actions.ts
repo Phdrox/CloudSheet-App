@@ -219,7 +219,6 @@ export function useDeleteFlow(id:string){
     ,onSuccess:async ()=>{
       toast.success('Fluxo Deletado com sucesso',{position:'top-center'})
       router.replace('/main/history');
-      
     },
     invalidateKeys:['flows',id]
     })
@@ -282,4 +281,73 @@ export function useFormGoal(){
   }
 
   return {handleSubmit,onSubmit,control,reset}
+}
+
+export function useDeleteGoal(id:string){
+
+  const router=useRouter()
+
+  const mutation=useMutateAction({
+    key:['deletegoals'],
+    mutationFn:(id:string) => deleteApi({url:`/goals/${id}`})
+    ,onSuccess:async ()=>{
+      toast.success('Meta Deletada com sucesso',{position:'top-center'})      
+    },
+    invalidateKeys:['goals']
+    })
+
+    function onSubmit(id:string){
+      if(!id) return
+      mutation.mutate(id)
+    }
+
+    return {onSubmit,isDeleting:mutation.isPending}
+}
+
+export function useAddValue(id:string,data:any){
+   const item=useDataMe()
+
+  const schemaFormGoals=z.object({
+    have: z.string(),
+    id_account: z.string(),
+    value: z.string(),
+    name: z.string(),
+  });
+    
+
+  type GoalSchema=z.infer<typeof schemaFormGoals>
+  const {handleSubmit,control, reset}=useForm<GoalSchema>({
+      resolver:zodResolver(schemaFormGoals),
+      defaultValues:{
+          have: '',
+          id_account: item.id || '',
+          value: '',
+          name:'',
+        }
+        })
+
+    useEffect(() => {
+      if (data) {
+      reset({
+        id_account: data?.id_account || item?.id,
+        have: data?.have,
+        value: data?.value,
+        name:data?.name
+ 
+      });
+    }
+    }, [item?.id, reset,data]);
+
+  const mutation=useMutateAction({
+    key:['goalsId'],
+    mutationFn:(data:GoalSchema) => putApi({url:`/goals/${id}`,data:data})
+    ,onSuccess:()=>{toast.success('Meta atualizado com sucesso',{position:'top-center'})},
+    invalidateKeys:['goals']
+    })
+
+  async function onSubmitEdit(item:GoalSchema){
+      mutation.mutate(item)
+  }
+
+  return {handleSubmit,onSubmitEdit,control,reset}
 }
