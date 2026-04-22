@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Raleway } from "next/font/google";
 import ReactQueryProvider from "@/hooks/useProviderQuery";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -25,9 +26,11 @@ export default function RootLayout({
   return (
    <html lang="pt-BR" >
     <ReactQueryProvider>
+      <TooltipProvider>
       <body className={`${raleway.className} bg-accent-foreground min-h-screen`}>
           {children}
       </body>
+      </TooltipProvider>
     </ReactQueryProvider>
     </html>
   );

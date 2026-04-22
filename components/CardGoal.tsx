@@ -43,7 +43,7 @@ export default function CardGoal({ children,name,id,data }: CardGoalProps) {
               
               <Controller name="value" control={control} render={({field})=>(
                 <div>
-                  <Label>Preciso</Label>
+                  <Label>Valor Total</Label>
                   <Input {...field} type="text" />
                 </div>
               )} />

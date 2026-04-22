@@ -17,25 +17,27 @@ export default  function Dashboard() {
     queryFn:()=> getApi({url:'/flows/myflows'})
   })
   
+  const totalSaldo=useGetQueries({
+    key:['flows','deleteflow','historyId','totalflows'],
+    queryFn:()=> getApi({url:'/flows/totalflows'})
+  })
+
+  
  
-  function SomarPrice(array:any[],type:string){
-    if (!array || !Array.isArray(array)) return 0;
-    
-    const arrayPrice=array.filter((i:{type:string})=>i.type==type)
-    const prices=arrayPrice.map((i:any)=>Number(i.price))
-    const result=prices.reduce((arr:any,i:any) => arr + i ,0)
-    return result
-  }
 
   if(isLoading){
     console.log('loading')
   }
+  if(totalSaldo.isLoading){
+    console.log('loading')
+  }
 
+  const saldoTotal=totalSaldo?.data?.data[0]
   const dataFlow=data?.data
 
-  const gastos=SomarPrice(dataFlow,'gasto')
-  const ganhos=SomarPrice(dataFlow,'ganho')
-  const saldo=ganhos-gastos
+  const gastos=saldoTotal?.sumExpense
+  const ganhos=saldoTotal?.sumEarn
+  const saldo=saldoTotal?.sumTotal
   
   const chartDataPrice=useMemo(()=>{
     if(!dataFlow) return [];

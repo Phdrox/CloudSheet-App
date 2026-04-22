@@ -3,11 +3,9 @@ import CardGoal from '@/components/CardGoal';
 import FormGoal from '@/components/FormGoal';
 import FormSheet from '@/components/FormSheet';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { useDeleteGoal } from '@/hooks/forms-actions';
 import { useGetQueries } from '@/hooks/methodsApi';
 import { getApi } from '@/hooks/requests/api-request';
-import { id } from 'date-fns/locale';
-import { Label, Pie, PieChart, ResponsiveContainer } from "recharts"
+import { Label, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 
 
 export type Goal={
@@ -15,6 +13,7 @@ export type Goal={
   value:string;
   id?:string;
   name?:string;
+  lack:number;
   id_account?:string;
 }
 const configData={
@@ -107,37 +106,37 @@ export default function Goals() {
                         outerRadius={80}
                         stroke="none"
                       >
-                          <Label
-                            content={({ viewBox }) => {
-                              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                return (
-                                  <text
-                                    x={viewBox.cx}
-                                    y={viewBox.cy}
-                                    textAnchor="middle"
-                                    dominantBaseline="middle"
-                                  >   
-                                      <tspan
-                                          x={viewBox.cx}
-                                          y={(viewBox.cy || 0) - 8}
-                                          className="fill-foreground font-bold"
-                                      >
-                                        {formart((Math.max(0, Number(item.value) - Number(item.have))))}
-                                      </tspan>
-                                
-                                      <tspan
-                                          x={viewBox.cx}
-                                          y={(viewBox.cy || 0) + 24}
-                                          className="fill-muted-foreground text-md font-semibold"
-                                      >
-                                          Falta 
-                                      </tspan>
-                                  </text>
-                                )
-                              }
-                            }}
-                          />
-                      </Pie>
+                         <Label
+                           content={({ viewBox }) => {
+                             if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                               return (
+                                 <text
+                                   x={viewBox.cx}
+                                   y={viewBox.cy}
+                                   textAnchor="middle"
+                                   dominantBaseline="middle"
+                                 >   
+                                     <tspan
+                                         x={viewBox.cx}
+                                         y={(viewBox.cy || 0) - 8}
+                                         className="fill-foreground font-bold"
+                                     >
+                                       {formart(item?.lack)}
+                                     </tspan>
+                               
+                                     <tspan
+                                         x={viewBox.cx}
+                                         y={(viewBox.cy || 0) + 24}
+                                         className="fill-muted-foreground text-md font-semibold"
+                                     >
+                                         Falta 
+                                     </tspan>
+                                 </text>
+                               )
+                             }
+                           }}
+                         />
+                        </Pie>
                     </PieChart>
                   </ResponsiveContainer>
                 </ChartContainer>
