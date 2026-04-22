@@ -122,7 +122,7 @@ export default function Goals() {
                                           y={(viewBox.cy || 0) - 8}
                                           className="fill-foreground font-bold"
                                       >
-                                        {formart(Math.max(0, Number(item.value) - Number(item.have)))}
+                                        {formart((Math.max(0, Number(item.value) - Number(item.have))))}
                                       </tspan>
                                 
                                       <tspan
