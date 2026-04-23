@@ -33,7 +33,7 @@ export default function ChartTooltipPie({chartData}:IChartToolPie) {
   }
   
   return (
-    <Card className="flex flex-col w-1/2 bg-foreground text-white border-2 border-border shadow-lg">
+    <Card className="flex flex-col w-1/2 bg-accent-foreground text-white border-2 border-border shadow-lg">
       <CardHeader className="items-center pb-0">
         <CardTitle>Percentual de gastos</CardTitle>
         <CardDescription>Mostra o percentual de gastos por categoria</CardDescription>

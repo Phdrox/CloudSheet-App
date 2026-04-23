@@ -9,6 +9,10 @@ import { Toaster } from "@/components/ui/sonner"
 import { useMemo } from "react"
 import ChartTooltipUI from "@/components/ChartTooltip"
 import ChartTooltipPie from "@/components/ChartTooltipPie"
+import { useSaldoAcumulado } from "@/hooks/saldoAcumalado"
+import { ChartConfig } from "@/components/ui/chart"
+import LineChartDash from "@/components/LineChart"
+import CardMaxList from "@/components/CardMaxList"
 
 export default  function Dashboard() {
 
@@ -22,8 +26,7 @@ export default  function Dashboard() {
     queryFn:()=> getApi({url:'/flows/totalflows'})
   })
 
-  
- 
+  const{resultadoFinal}:any=useSaldoAcumulado()
 
   if(isLoading){
     console.log('loading')
@@ -63,7 +66,6 @@ export default  function Dashboard() {
     new Date(a.date).getTime()- new Date(b.date).getTime());
   },[data])
  
-  //constante de categoria
   const chartDataCategory=useMemo(()=>{
     if(!dataFlow || dataFlow.length ===0 || gastos === 0) return [];
     
@@ -120,7 +122,12 @@ export default  function Dashboard() {
     },
 ]
 
-
+const chartLine = {
+  saldo: {
+    label: "Saldo",
+    color: "var(--chart-3)",
+  },
+} satisfies ChartConfig
 
   return (
     <div className="bg-transparent p-10 ">
@@ -141,9 +148,16 @@ export default  function Dashboard() {
             ))
           }
           </div>
-          <div className="w-full pt-2 flex gap-5 justify-around">
-            <ChartTooltipUI chartData={chartDataPrice} configuration={configChart}/>
-            <ChartTooltipPie chartData={chartDataCategory} />
+          <div className="w-full pt-2 flex flex-col gap-5">
+            <div className="flex w-full pt-2 gap-5 justify-around">
+              <ChartTooltipUI chartData={chartDataPrice} configuration={configChart}/>
+              <ChartTooltipPie chartData={chartDataCategory} />
+            </div>
+            <div className="w-full flex  h-full gap-3">
+                <LineChartDash config={chartLine} chartData={resultadoFinal?resultadoFinal:[]}/>
+                <CardMaxList data={dataFlow}/>
+            </div>
+            
           </div>   
       </div>       
     </div>

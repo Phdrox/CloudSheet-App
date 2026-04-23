@@ -23,7 +23,7 @@ export default function ChartTooltipUI({configuration,chartData}:IChartTooltip) 
   const chartConfig=configuration satisfies ChartConfig
   
   return (
-    <Card className="bg-foreground shadow-lg border-2 border-border w-1/2 h-full ">
+    <Card className="bg-accent-foreground shadow-lg border-2 border-border w-1/2 h-full ">
         <CardHeader>
             <CardTitle className="text-white">Gráfico de Fluxos</CardTitle>
             <CardDescription>Demonstra o controle de fluxo ao longo do ano atual, </CardDescription>
@@ -62,8 +62,7 @@ export default function ChartTooltipUI({configuration,chartData}:IChartTooltip) 
                       defaultIndex={1}
                     />
                 </BarChart>
-            </ChartContainer>:<CardDescription className="font-bold text-white">Não possui dados</CardDescription>}
-            
+            </ChartContainer>:<CardDescription className="font-bold text-white">Não possui dados</CardDescription>}    
         </CardContent>
     </Card>
   )
