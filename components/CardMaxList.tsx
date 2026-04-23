@@ -34,11 +34,11 @@ export default function CardMaxList({data}:IMaxList) {
         {listMaxExpensive.length>0?listMaxExpensive?.map((item:any,index:number)=>(
             <Item key={index} className="flex gap-2">
                 <ItemActions>
-                    <CircleDollarSign />
+                    <CircleDollarSign className="text-chart-2" />
                 </ItemActions>
                 <ItemContent>
                     <ItemTitle>{item.name}</ItemTitle>
-                    <ItemDescription>
+                    <ItemDescription className="text-chart-5">
                      {formart(item.price)}
                     </ItemDescription>
                 </ItemContent>     
