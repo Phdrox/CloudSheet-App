@@ -121,7 +121,7 @@ export default function Goals() {
                                          y={(viewBox.cy || 0) - 8}
                                          className="fill-foreground font-bold"
                                      >
-                                       {formart(item?.lack)}
+                                       {item?.lack && item?.lack>0?formart(item?.lack):formart(0)}
                                      </tspan>
                                
                                      <tspan

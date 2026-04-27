@@ -16,7 +16,7 @@ export default function FormSheet({title,description,children,buttonSheetName}:I
       <SheetTrigger asChild className="cursor-pointer">
         <Button variant="outline" className="text-white">{buttonSheetName}</Button>
       </SheetTrigger>
-      <SheetContent side="right" className="dark text-white">
+      <SheetContent side="right" className="dark text-white" onInteractOutside={(e) => e.preventDefault()}>
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
           <SheetDescription>{description}</SheetDescription>
