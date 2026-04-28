@@ -11,7 +11,7 @@ interface LineChartDashProps {
 export default function LineChartDash({ config, chartData }: LineChartDashProps) {
   return (
      <Card className='bg-accent-foreground shadow-lg border-2 border-border w-2/3 h-full overflow-x-auto'>
-      <CardHeader className='text-white text-xl'>Controle de Saldo Mensal</CardHeader>
+      <CardHeader className='text-white text-xl'>Controle de Saldo Diário</CardHeader>
       {chartData && chartData.length>0?
       <ChartContainer config={config} className="h-full w-full dark p-3 overflow-x-auto">
           <LineChart
@@ -30,8 +30,8 @@ export default function LineChartDash({ config, chartData }: LineChartDashProps)
               axisLine={false}
               tickMargin={10}
               tickFormatter={(value) => {
-                const [month,year] = value.split("-")
-                return `${month}/${year.slice(2)}`
+                const [,,day] = value.split("-")
+                return `${day}`
               }}
             />
             <YAxis

@@ -2,9 +2,9 @@ import { useGetQueries } from "./methodsApi"
 import { getApi } from "./requests/api-request"
 
 
-export const useSaldoAcumulado = () => {
+export const useSaldoAcumulado = (date:string) => {
     const {data,isLoading} =useGetQueries({
-        key:['flows','deleteflow','historyId'],
+        key:['flows','deleteflow','historyId',date],
         queryFn:()=> getApi({url:'/flows/myflows'})
         })
     
@@ -13,11 +13,12 @@ export const useSaldoAcumulado = () => {
         }
         const dataFlow=data?.data!
         const saldosAcumulado=dataFlow?.reduce((acc:any,item:any)=>{
-            const date = item.date.split('T')[0].split('-');
-            const year = parseInt(date[0]);
-            const month = parseInt(date[1]);
-            const dateKey=`${month}-${year}`;
-            if(year !== new Date().getFullYear()) return acc
+            const [yearStr, monthStr, dayStr] = item.date.split('T')[0].split('-');
+          
+            const dateKey= `${yearStr}-${monthStr}-${dayStr}`;
+            
+
+            if (Number(monthStr) !== Number(date)) return acc;
             
             if(!acc[dateKey]){
                 acc[dateKey]={date:dateKey,saldo:0}
@@ -46,5 +47,4 @@ export const useSaldoAcumulado = () => {
         })
 
     return {resultadoFinal}
-    
 }

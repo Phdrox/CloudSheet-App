@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, CardContent, CardFooter, CardTitle } from './ui/card'
+import { LoaderCircle } from 'lucide-react'
 
 
 type ICardPrice={
@@ -18,7 +19,10 @@ export default function CardPrice({price,title,color,bgTitle}:ICardPrice) {
         <CardTitle className=' w-full px-2 text-xl'>{title} 
           {title==='Saldo'?<span className={`text-sm`}> Total</span>:<span className='text-sm'> Totais</span>}
           </CardTitle>
-        <CardFooter className={`bg-accent-foreground ${color ? color:'text-ring'} text-2xl font-semibold `}>{format(price)}</CardFooter>
+        <CardFooter className={`bg-accent-foreground ${color ? color:'text-ring'} text-2xl font-semibold `}>{
+        isNaN(price)?<LoaderCircle className='animate-spin'/>:
+        format(price)
+        }</CardFooter>
     </Card>
   )
 }

@@ -38,10 +38,9 @@ export default function ChartTooltipUI({configuration,chartData}:IChartTooltip) 
                       tickMargin={10}
                       axisLine={false}
                       tickFormatter={(value)=>{
-                        return new Date(value).toLocaleDateString("pt-BR",{
-                            month:'short',
-                            year:'numeric',                            
-                        })
+                        return (Number(new Date(value).toLocaleDateString("pt-BR",{
+                            day:'numeric',                           
+                        })) + 1).toString()
                       }}
                     />
                     <Bar

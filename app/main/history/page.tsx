@@ -1,17 +1,16 @@
 'use client'
-import DataTableFlow from '@/components/DataTableFlow'
-import { Input } from '@/components/ui/input';
+import DataTableFlow from '@/components/DataTableFlow';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { useGetQueries } from '@/hooks/methodsApi';
-import { getApi } from '@/hooks/requests/api-request'
+import { getApi } from '@/hooks/requests/api-request';
 import { ColumnDef } from '@tanstack/react-table';
-import { InfoIcon, Menu, Search } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Toaster } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
 
-type IFlows ={
+type IFlows={
   id:string;
   name:string;
   type:string;
@@ -30,7 +29,7 @@ export default function History() {
 
   const {data,isLoading} =useGetQueries({
       key:['flows',flowName],
-      queryFn:()=> getApi({url:`/flows/allflows?${flowName?'search='+flowName:''}`}),
+      queryFn:()=> getApi({url:`/flows/allflows?${flowName?'search='+flowName:''+ '?' + 'date=' }`}),
       retry:false
     })
   
@@ -45,7 +44,6 @@ export default function History() {
       cell:({row})=>{
         return null
       }
-
     },
     {
       accessorKey:"name",
@@ -83,7 +81,6 @@ export default function History() {
       cell:({row})=>{
         const bank: string = row.getValue('bank')
       return (
-        // Adicionei 'block' para o truncate funcionar corretamente
         <div className='max-w-[150px] truncate font-medium' title={bank}>
           {bank}
         </div>

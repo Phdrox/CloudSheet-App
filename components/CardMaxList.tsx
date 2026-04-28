@@ -10,13 +10,16 @@ type IFlowCard={
 
 interface IMaxList{
   data?:{}[]
+  date:string
 }
 
-export default function CardMaxList({data}:IMaxList) {
-  const gastos:any=data?.filter((item:any)=> item.type=='gasto' && new Date(item.date).getMonth() == new Date().getMonth()).slice(0,10)
-  console.log(gastos);
-  if(!gastos) return [];
-  const listMaxExpensive=gastos.sort((a:any,b:any)=> b.price - a.price)
+export default function CardMaxList({data,date}:IMaxList) {
+  const gastos:any=data?.filter((item:any)=> item.type==='gasto' && Number(new Date(item.date).getMonth()+1) == Number(date))?.slice(0,10) || []
+
+  
+  const listMaxExpensive = [...gastos].sort(
+    (a: any, b: any) => Number(b.price) - Number(a.price)
+  );
   
   const formart=(value:number)=>{
     const formartValues=new Intl.NumberFormat('pt-BR', {
@@ -45,7 +48,7 @@ export default function CardMaxList({data}:IMaxList) {
                 <Separator/>       
             </Item>
             
-        )):<LoaderCircleIcon className="animate-spins"/>}
+        )):<p className="text-center font-bold">Não possui gastos esse mês</p>}
      </Card>
   )
 }
