@@ -23,13 +23,13 @@ export function useMutateAction<TData = unknown, TVariables = unknown>
     return useMutation({
          mutationFn: mutationFn,
          onMutate: async () => {
-           await queryClient.cancelQueries({queryKey:key});
+           await queryClient.cancelQueries({ queryKey: key, exact: false });
         },
         onSuccess,
-        onError:() => {},
+        onError,
         onSettled:() => {
             if (invalidateKeys) {
-                  queryClient.invalidateQueries({queryKey:invalidateKeys}).then();
+                  queryClient.invalidateQueries({ queryKey: key, exact: false,refetchType: 'active', }).then();
             }
         }
     })

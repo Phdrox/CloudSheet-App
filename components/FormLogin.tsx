@@ -6,20 +6,22 @@ import { Button } from './ui/button'
 import Link from 'next/link'
 import { useFormLogin } from '@/hooks/forms-actions'
 import { Controller } from 'react-hook-form'
+import { Toaster } from './ui/sonner'
 
 export default function FormLogin() {
  
-  const {handleSubmit,control,reset,onSubmit} =useFormLogin()
+  const {handleSubmit,control,onSubmit,errors} =useFormLogin()
 
   return (
     <Card className='text-white font-raleway w-1/4 bg-primary border border-border'>
         <CardHeader>
+           <Toaster />
             <CardTitle>Login</CardTitle>
             <CardDescription>Realize seu login logo abaixo</CardDescription>
         </CardHeader>
         <CardContent>
-            <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
-                <Controller name='email' control={control} render={({field,fieldState,formState}) =>(
+            <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)} >
+                <Controller name='email' control={control} render={({field,fieldState}) =>(
                     <div className='grid gap-2'>
                         <Label>Email</Label>
                         <Input type="email" {...field} 

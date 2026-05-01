@@ -65,9 +65,9 @@ export default function LineChartDash({ config, chartData }: LineChartDashProps)
                 fontSize={12}
 
               />
-            </Line>
+            </Line> 
           </LineChart>
-        </ChartContainer>:<p>Não Há Saldo em conta</p>}
+        </ChartContainer>:<p className='text-center font-bold text-white'>Não Há Saldo em conta</p>}
       </Card>
   )
 }

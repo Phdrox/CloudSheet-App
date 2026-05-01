@@ -4,7 +4,7 @@ import { getApi } from "./requests/api-request"
 
 export const useSaldoAcumulado = (date:string) => {
     const {data,isLoading} =useGetQueries({
-        key:['flows','deleteflow','historyId',date],
+        key:['flows','historyId',date],
         queryFn:()=> getApi({url:'/flows/myflows'})
         })
     

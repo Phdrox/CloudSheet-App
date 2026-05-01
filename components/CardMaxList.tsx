@@ -1,5 +1,5 @@
-import { CircleDollarSign, LoaderCircleIcon } from "lucide-react"
-import { Card, CardContent, CardHeader } from "./ui/card"
+import { CircleDollarSign } from "lucide-react"
+import { Card,CardHeader } from "./ui/card"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "./ui/item";
 import { Separator } from "./ui/separator";
 
@@ -32,7 +32,7 @@ export default function CardMaxList({data,date}:IMaxList) {
   
    
   return (
-     <Card className="dark  shadow-lg border-2 border-border w-1/3 h-full">
+     <Card className="dark  shadow-lg border-2 border-border w-1/3 ">
         <CardHeader className="text-lg text-center">Maiores gastos deste mês</CardHeader>
         {listMaxExpensive.length>0?listMaxExpensive?.map((item:any,index:number)=>(
             <Item key={index} className="flex gap-2">

@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { useMemo, useState } from "react"
 import ChartTooltipUI from "@/components/ChartTooltip"
 import ChartTooltipPie from "@/components/ChartTooltipPie"
-import { useSaldoAcumulado } from "@/hooks/saldoAcumalado"
+import { useSaldoAcumulado } from "@/hooks/amount"
 import { ChartConfig } from "@/components/ui/chart"
 import LineChartDash from "@/components/LineChart"
 import CardMaxList from "@/components/CardMaxList"
@@ -19,17 +19,18 @@ import { Select,SelectContent,SelectGroup,SelectItem,SelectTrigger, SelectValue 
 export default  function Dashboard() {
   const [date,setDate]=useState<string>('1')
   const {data,isLoading} =useGetQueries({
-    key:['flows','deleteflow','historyId',date],
+    key:['flows','historyId',date],
     queryFn:()=> getApi({url:`/flows/myflows?date=${date}`})
   })
   
   const totalSaldo=useGetQueries({
-    key:['flows','deleteflow','historyId','totalflows',date],
+    key:['flows',date],
     queryFn:()=> getApi({url:`/flows/totalflows?date=${date}`})
   })
   
   const{resultadoFinal}:any=useSaldoAcumulado(date)
-  
+  console.log(date)
+  console.log(data)
   if(isLoading){
     console.log('loading')
   }
@@ -195,7 +196,7 @@ const chartLine = {
               <ChartTooltipUI chartData={chartDataPrice} configuration={configChart}/>
               <ChartTooltipPie chartData={chartDataCategory} />
             </div>
-            <div className="w-full flex  h-full gap-3">
+            <div className="w-full flex  h-full gap-3 h-full">
                 <LineChartDash config={chartLine} chartData={resultadoFinal?resultadoFinal:[]}/>
                 <CardMaxList data={dataFlow} date={date}/>
             </div>

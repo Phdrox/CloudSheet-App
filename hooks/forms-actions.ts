@@ -57,7 +57,7 @@ export function useFormLogin() {
   })
 
   type LoginSchema = z.infer<typeof schemaFormLogin>
-  const {handleSubmit, control, reset,setError}= useForm<LoginSchema>({
+  const {handleSubmit, control, reset,setError,formState}= useForm<LoginSchema>({
     resolver: zodResolver(schemaFormLogin),
     mode:"onSubmit",
     defaultValues:{
@@ -71,8 +71,14 @@ export function useFormLogin() {
      mutationFn: (data: LoginSchema) => postApi({url:'/auth/login',data}),
      onSuccess:()=>{router.push('/main/dashboard')},
      onError:()=>{
-       toast.error('Email ou senha',{position:'top-center'})
-     },
+      toast.error('Email ou senha estão incorretas',{
+        position:'top-center',
+        style:{
+          color:"white",
+          background:"oklch(0.577 0.245 27.325)"
+        }
+      })
+    }
   })
 
   async function onSubmit(item: LoginSchema) {
@@ -80,7 +86,7 @@ export function useFormLogin() {
   }
 
 
-  return {onSubmit,reset,handleSubmit,control,setError}
+  return {onSubmit,reset,handleSubmit,control,errors:formState.errors}
 }
 
 export function useFormFlows(){
@@ -127,8 +133,7 @@ export function useFormFlows(){
       toast.success('Fluxo criado com sucesso',{position:'top-center'})
     },
 
-    invalidateKeys:['flows']
-  
+    invalidateKeys:['flows','historyId']
     })
 
   async function onSubmit(item:FlowsSchema){
@@ -229,7 +234,6 @@ export function useDeleteFlow(id:string){
     }
 
     return {onSubmit,isDeleting:mutation.isPending}
-
 }
 
 export function useFormGoal(){
