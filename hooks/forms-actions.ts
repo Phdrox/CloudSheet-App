@@ -78,7 +78,7 @@ export function useFormLogin() {
           background:"oklch(0.577 0.245 27.325)"
         }
       })
-    }
+    },
   })
 
   async function onSubmit(item: LoginSchema) {

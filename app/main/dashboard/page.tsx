@@ -56,7 +56,7 @@ export default  function Dashboard() {
  
     if (Number(monthStr) !== Number(date)) return acc;
 
-    const dateKey = `${yearStr}-${monthStr}-${dayStr}`;
+    const dateKey = `${yearStr}-${monthStr}-${dayStr+1}`;
 
     if (!acc[dateKey]) {
       acc[dateKey] = {
@@ -98,7 +98,12 @@ export default  function Dashboard() {
   const chartDataCategory=useMemo(()=>{
     if(!dataFlow || dataFlow.length ===0 || gastos === 0) return [];
     
-    const grouped=dataFlow.reduce((acc:any,item:any) => {
+    const grouped=dataFlow.reduce((acc:Record<string,{category:string,gasto:number}>,item:{
+      type:string,
+      date:string,
+      id_categories:string,
+      price:string
+    }) => {
       if (item.type !== 'gasto') return acc;
       const [_, monthStr] = item.date.split('T')[0].split('-');
       if (Number(monthStr) !== Number(date)) return acc;      

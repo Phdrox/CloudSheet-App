@@ -1,5 +1,5 @@
 'use client'
-import { FieldGroup, FieldLabel,Field, FieldDescription } from './ui/field'
+import { FieldGroup, FieldLabel,Field } from './ui/field'
 import { useFormFlows } from '@/hooks/forms-actions'
 import { Controller } from 'react-hook-form'
 import { useGetQueries } from '@/hooks/methodsApi'
@@ -13,7 +13,6 @@ import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
 import { ptBR } from "date-fns/locale"
 import {format} from "date-fns"
 import { Calendar } from './ui/calendar'
-import { Combobox,ComboboxInput,ComboboxContent,ComboboxEmpty,ComboboxList,ComboboxItem } from './ui/combobox'
 import { Command, CommandInput, CommandItem, CommandList } from './ui/command'
 import { cn } from '@/lib/utils'
 
@@ -26,7 +25,7 @@ import { cn } from '@/lib/utils'
 
 export default function FormFlows() {
 
- const {handleSubmit,control,reset,onSubmit}=useFormFlows()
+ const {handleSubmit,control,onSubmit}=useFormFlows()
  const {data,isLoading}=useGetQueries({key:['category'],queryFn:()=>getApi({url:'/category'})})
  const items=data?.data || [];
  const banks=useGetQueries({key:['banks'],queryFn:()=>getApi({url:`/banks`})})
@@ -77,7 +76,7 @@ export default function FormFlows() {
                </Field>
             )} /> 
             
-            <Controller name='id_name_banks'control={control} render={({field,fieldState})=>(
+            <Controller name='id_name_banks'control={control} render={({field})=>(
                <Field>
                   <FieldLabel>
                       Instituição Financeira
@@ -90,7 +89,7 @@ export default function FormFlows() {
                         className={cn("w-[200px] justify-between  truncate", !field.value && "text-muted-foreground ")}
                       >
                         {field.value
-                          ? itemsBank.find((f:any) => f.id === field.value)?.name
+                          ? itemsBank.find((f:{id:string}) => f.id === field.value)?.name
                           : "Selecione uma Instituição"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -99,7 +98,7 @@ export default function FormFlows() {
                       <Command>
                         <CommandInput placeholder="Selecione uma Instituição" />
                         <CommandList>
-                          {itemsBank.map((framework:any) => (
+                          {itemsBank.map((framework:{id:string,name:string}) => (
                             <CommandItem
                               value={framework.name}
                               key={framework.id}
@@ -197,7 +196,7 @@ export default function FormFlows() {
                 </Field>                
             )}/>
         </FieldGroup>
-            <Controller name='date' control={control} render={({field,fieldState})=>(
+            <Controller name='date' control={control} render={({field})=>(
                 <Field>
                     <FieldLabel>Data</FieldLabel>
                     <Popover>

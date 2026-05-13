@@ -1,12 +1,12 @@
 import { Button } from "./ui/button";
-import { Sheet,SheetClose,SheetContent,SheetDescription,SheetFooter,SheetTitle,SheetHeader,SheetTrigger } from "./ui/sheet"
+import { Sheet,SheetContent,SheetDescription,SheetTitle,SheetHeader,SheetTrigger } from "./ui/sheet"
 import React from "react"
 
 type IFormeSheet={
     title:string;
     description:string;
-    children:React.ReactNode;
-    buttonSheetName:string
+    children:React.PropsWithChildren<React.ReactNode>;
+    buttonSheetName:string;
 }
 
 export default function FormSheet({title,description,children,buttonSheetName}:IFormeSheet) {
