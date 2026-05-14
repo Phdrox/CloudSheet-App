@@ -104,7 +104,7 @@ export default function History() {
       accessorKey:"date",
       header:"Data",
       cell:({row})=>{
-        const date=new Date(row.getValue('date'))
+        const date=new Date(row.getValue('date')+'T00:00:00')
         return date.toLocaleDateString('pt-BR')
       }
     },
